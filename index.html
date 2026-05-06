@@ -27,7 +27,8 @@
             --color-surface: rgba(255, 255, 255, 0.05);
             --color-surface-hover: rgba(255, 255, 255, 0.08);
             --color-surface-active: rgba(255, 255, 255, 0.12);
-            --color-surface-border: rgba(255, 255, 255, 0.1);
+            --color-surface-border: lch(50 20 var(--hue, 0) / 0.2); animation: hue 10s linear infinite; } @keyframes hue { from { --hue: 0; } to { --hue: 360; }
+            
             
             /* Typography Colors */
             --color-text-primary: #f5f5f7;
