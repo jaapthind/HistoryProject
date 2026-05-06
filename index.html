@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#0a0a0c">
     <meta name="description" content="An interactive, high-performance academic exhibition on the resistance and resilience of enslaved people in America.">
     <title>Resistance & Resilience | Interactive Archive</title>
 
@@ -14,51 +14,43 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
     <style>
         /* ==========================================================================
-           01. CSS VARIABLES & DESIGN SYSTEM (EXTENDED)
+           01. DESIGN SYSTEM & TOKENS (MASSIVE ARCHITECTURE)
            ========================================================================== */
         :root {
-            /* Theme Base Colors - Dark Mode Default for Cyber-Noir Aesthetic */
-            --bg-base: #050505;
-            --bg-surface: #0f0f11;
-            --bg-surface-hover: #1a1a1c;
-            --bg-surface-active: #252528;
-            --bg-elevated: rgba(15, 15, 17, 0.75);
-            --bg-modal: rgba(5, 5, 5, 0.95);
+            /* Core Backgrounds - Dark Cyber-Noir Base */
+            --bg-base: #050507;
+            --bg-surface: rgba(15, 15, 18, 0.6);
+            --bg-surface-hover: rgba(25, 25, 28, 0.8);
+            --bg-glass: rgba(10, 10, 12, 0.4);
             
             /* Typography Colors */
             --text-primary: #ffffff;
-            --text-secondary: #a1a1a6;
-            --text-tertiary: #6e6e73;
+            --text-secondary: #a1a1aa;
+            --text-tertiary: #71717a;
             --text-inverse: #000000;
-            --text-inverse-secondary: rgba(0, 0, 0, 0.7);
 
             /* Thematic Accents */
-            --accent-main: #0066cc;
-            --accent-main-hover: #0077ed;
-            --accent-overt: #ff3b30;
-            --accent-covert: #32ade6;
-            --accent-dignity: #ff9500;
-            --accent-success: #34c759;
-            --accent-warning: #ffcc00;
-            --accent-error: #ff3b30;
+            --accent-main: #3b82f6;
+            --accent-main-hover: #60a5fa;
+            --accent-overt: #ef4444;
+            --accent-covert: #06b6d4;
+            --accent-dignity: #f59e0b;
 
-            /* Borders and Dividers */
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-medium: rgba(255, 255, 255, 0.15);
-            --border-strong: rgba(255, 255, 255, 0.25);
-            --border-focus: rgba(0, 102, 204, 0.5);
+            /* Borders */
+            --border-subtle: rgba(255, 255, 255, 0.05);
+            --border-medium: rgba(255, 255, 255, 0.1);
+            --border-strong: rgba(255, 255, 255, 0.2);
 
-            /* Typography Families */
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-            --font-serif: 'Playfair Display', Georgia, Times, serif;
-            --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            /* Typography */
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
 
-            /* Fluid Typography Scale (Advanced Calculation) */
+            /* Fluid Typography Scale */
             --text-xs: clamp(0.75rem, 0.7vw + 0.5rem, 0.875rem);
             --text-sm: clamp(0.875rem, 0.8vw + 0.5rem, 1rem);
             --text-base: clamp(1rem, 1vw + 0.5rem, 1.125rem);
@@ -68,1042 +60,766 @@
             --text-3xl: clamp(2rem, 3vw + 0.5rem, 2.5rem);
             --text-4xl: clamp(2.5rem, 4vw + 0.5rem, 3.5rem);
             --text-5xl: clamp(3.5rem, 5vw + 0.5rem, 4.5rem);
-            --text-6xl: clamp(4.5rem, 6vw + 0.5rem, 5.5rem);
-            --text-display: clamp(5rem, 8vw + 1rem, 8rem);
-            --text-massive: clamp(6rem, 10vw + 2rem, 12rem);
+            --text-massive: clamp(4rem, 8vw + 2rem, 10rem);
 
-            /* Spacing Scale */
-            --space-px: 1px;
-            --space-0: 0;
-            --space-0-5: 0.125rem;
-            --space-1: 0.25rem;
-            --space-1-5: 0.375rem;
+            /* Spacing */
             --space-2: 0.5rem;
-            --space-2-5: 0.625rem;
-            --space-3: 0.75rem;
-            --space-3-5: 0.875rem;
             --space-4: 1rem;
-            --space-5: 1.25rem;
             --space-6: 1.5rem;
-            --space-7: 1.75rem;
             --space-8: 2rem;
-            --space-9: 2.25rem;
-            --space-10: 2.5rem;
-            --space-11: 2.75rem;
             --space-12: 3rem;
-            --space-14: 3.5rem;
             --space-16: 4rem;
-            --space-20: 5rem;
             --space-24: 6rem;
-            --space-28: 7rem;
             --space-32: 8rem;
-            --space-36: 9rem;
-            --space-40: 10rem;
             --space-48: 12rem;
-            --space-56: 14rem;
-            --space-64: 16rem;
-            --space-72: 18rem;
-            --space-80: 20rem;
-            --space-96: 24rem;
-            --space-section: clamp(6rem, 15vh, 12rem);
-
-            /* Layout Boundaries */
-            --container-sm: 640px;
-            --container-md: 768px;
-            --container-lg: 1024px;
-            --container-xl: 1280px;
-            --container-2xl: 1440px;
-            --container-3xl: 1600px;
-            --grid-gap: clamp(1rem, 2vw, 2rem);
-            --header-height: 70px;
-            --local-nav-height: 50px;
-
-            /* Radii */
-            --radius-none: 0;
-            --radius-xs: 4px;
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 18px;
+            
+            /* Structural */
+            --container-lg: 1200px;
+            --container-md: 900px;
+            --header-height: 80px;
             --radius-xl: 24px;
             --radius-2xl: 32px;
-            --radius-3xl: 48px;
-            --radius-full: 9999px;
-
-            /* Shadows & Depth */
-            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
-            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.8);
-            --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.9);
-            --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-            --shadow-glow-blue: 0 0 40px rgba(0, 102, 204, 0.3);
-            --shadow-glow-red: 0 0 40px rgba(255, 59, 48, 0.3);
-            --shadow-glow-rainbow: 0 0 50px rgba(255, 255, 255, 0.2);
-
-            /* Transitions & Easing */
-            --ease-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
-            --ease-in: cubic-bezier(0.4, 0.0, 1, 1);
-            --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
-            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-            --ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
-            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --duration-fast: 150ms;
-            --duration-normal: 300ms;
-            --duration-slow: 500ms;
-            --duration-epic: 1000ms;
-
-            /* Z-Index Hierarchy */
-            --z-negative: -1;
-            --z-bg: 0;
+            
+            /* Z-Index */
+            --z-bg: -10;
             --z-base: 1;
             --z-content: 10;
-            --z-floating: 50;
-            --z-header: 100;
-            --z-dropdown: 200;
-            --z-modal: 1000;
-            --z-preloader: 9999;
-            --z-cursor: 10000;
+            --z-nav: 100;
+            --z-loader: 1000;
         }
 
         /* ==========================================================================
-           02. MODERN RESET & NORMALIZATION
+           02. CSS RESET & GLOBAL STYLES
            ========================================================================== */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            font-size: 16px;
-            -webkit-text-size-adjust: 100%;
-            -moz-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-            scroll-behavior: auto;
-        }
-
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html { font-size: 16px; scroll-behavior: auto; }
+        
         body {
             font-family: var(--font-sans);
             color: var(--text-primary);
             background-color: var(--bg-base);
-            line-height: 1.5;
-            font-weight: 400;
-            letter-spacing: -0.01em;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
+            line-height: 1.6;
             overflow-x: hidden;
-            width: 100%;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            cursor: auto;
+            cursor: auto; /* Regular mouse cursor enforced */
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Lenis Framework Overrides */
+        /* Lenis Required Styles */
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
         .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
         .lenis.lenis-stopped { overflow: hidden; }
-        .lenis.lenis-scrolling iframe { pointer-events: none; }
 
-        /* Media Default Styles */
-        img, picture, video, canvas, svg {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            user-select: none;
-            -webkit-user-drag: none;
-        }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
+        img, svg { max-width: 100%; height: auto; display: block; }
 
-        svg { fill: currentColor; }
+        /* Typography */
+        h1, h2, h3, h4 { font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: var(--space-4); }
+        .title-massive { font-size: var(--text-massive); font-weight: 800; letter-spacing: -0.04em; line-height: 0.95; }
+        .title-display { font-size: var(--text-5xl); }
+        .title-section { font-size: var(--text-4xl); }
+        .text-lead { font-size: var(--text-xl); color: var(--text-secondary); max-width: 60ch; }
+        .serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
+        .mono { font-family: var(--font-mono); font-size: var(--text-sm); letter-spacing: 0.05em; }
 
-        /* Form & Button Resets */
-        button, input, select, textarea {
-            font: inherit;
-            color: inherit;
-            background: transparent;
-            border: none;
-            outline: none;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-        
-        button { cursor: pointer; }
-
-        a {
-            color: var(--accent-main);
-            text-decoration: none;
-            transition: color var(--duration-fast) var(--ease-standard);
-        }
-        
-        a:hover { color: var(--accent-main-hover); }
-
-        ul, ol { list-style: none; }
-        
-        ::selection {
-            background-color: var(--accent-main);
-            color: #ffffff;
-        }
-
-        /* ==========================================================================
-           03. ADVANCED TYPOGRAPHY SYSTEM
-           ========================================================================== */
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: var(--space-4);
-            color: var(--text-primary);
-        }
-
-        h1 { font-size: var(--text-5xl); letter-spacing: -0.04em; }
-        h2 { font-size: var(--text-4xl); }
-        h3 { font-size: var(--text-3xl); }
-        h4 { font-size: var(--text-2xl); }
-        h5 { font-size: var(--text-xl); }
-        h6 { font-size: var(--text-lg); }
-
-        .display-title {
-            font-size: var(--text-display);
-            font-weight: 800;
-            line-height: 1;
-            letter-spacing: -0.05em;
-            margin-bottom: var(--space-6);
-        }
-        
-        .massive-title {
-            font-size: var(--text-massive);
-            font-weight: 900;
-            line-height: 0.9;
-            letter-spacing: -0.06em;
-            margin-bottom: var(--space-8);
-        }
-
-        .serif { font-family: var(--font-serif); }
-        .serif-italic { font-family: var(--font-serif); font-weight: 400; font-style: italic; }
-        .mono { font-family: var(--font-mono); }
-
-        p {
-            font-size: var(--text-base);
-            color: var(--text-secondary);
-            margin-bottom: var(--space-6);
-            line-height: 1.6;
-            max-width: 75ch;
-        }
-
-        p.lead {
-            font-size: var(--text-xl);
-            color: var(--text-primary);
-            font-weight: 400;
-            line-height: 1.5;
-            max-width: 65ch;
-            margin-bottom: var(--space-8);
-        }
-
-        .caption { font-size: var(--text-sm); color: var(--text-tertiary); letter-spacing: 0.02em; }
-        
-        .eyebrow {
-            font-size: var(--text-xs);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-weight: 700;
-            color: var(--text-tertiary);
-            margin-bottom: var(--space-4);
-            display: block;
-        }
-
-        /* ==========================================================================
-           04. LAYOUT & GRID UTILITIES
-           ========================================================================== */
-        .container { width: 100%; max-width: var(--container-xl); margin: 0 auto; padding: 0 var(--space-6); }
-        .container-fluid { width: 100%; padding: 0 var(--space-6); }
-        .container-narrow { width: 100%; max-width: var(--container-md); margin: 0 auto; padding: 0 var(--space-6); }
-        .container-wide { width: 100%; max-width: var(--container-3xl); margin: 0 auto; padding: 0 var(--space-6); }
-
-        .section { position: relative; padding: var(--space-section) 0; z-index: var(--z-content); }
-        .section-sm { padding: var(--space-20) 0; }
-        .section-lg { padding: calc(var(--space-section) * 1.5) 0; }
-        .section-fullscreen { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
-
-        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--grid-gap); }
-        .flex { display: flex; }
-        .flex-col { display: flex; flex-direction: column; }
-        
-        /* Alignment */
-        .items-center { align-items: center; }
-        .items-start { align-items: flex-start; }
-        .items-end { align-items: flex-end; }
-        .justify-center { justify-content: center; }
-        .justify-between { justify-content: space-between; }
-        .justify-start { justify-content: flex-start; }
-        .justify-end { justify-content: flex-end; }
-        .wrap { flex-wrap: wrap; }
-
-        /* Positioning */
-        .relative { position: relative; }
-        .absolute { position: absolute; }
-        .fixed { position: fixed; }
-        .sticky { position: sticky; }
-        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-        .z-10 { z-index: 10; }
-        .z-20 { z-index: 20; }
-        .z-30 { z-index: 30; }
-
-        /* Dimensions */
-        .w-full { width: 100%; }
-        .h-full { height: 100%; }
-        .h-screen { height: 100vh; }
-        .min-h-screen { min-height: 100vh; }
-
-        /* Typography Alignment */
         .text-center { text-align: center; }
-        .text-left { text-align: left; }
-        .text-right { text-align: right; }
-
-        /* Margins */
-        .mt-auto { margin-top: auto; }
-        .mb-0 { margin-bottom: var(--space-0); }
-        .mb-2 { margin-bottom: var(--space-2); }
-        .mb-4 { margin-bottom: var(--space-4); }
-        .mb-6 { margin-bottom: var(--space-6); }
-        .mb-8 { margin-bottom: var(--space-8); }
-        .mb-12 { margin-bottom: var(--space-12); }
-        .mb-16 { margin-bottom: var(--space-16); }
-        .mb-24 { margin-bottom: var(--space-24); }
-        .mb-32 { margin-bottom: var(--space-32); }
+        .mx-auto { margin-left: auto; margin-right: auto; }
         
-        .mt-8 { margin-top: var(--space-8); }
-        .mt-16 { margin-top: var(--space-16); }
-        .mt-24 { margin-top: var(--space-24); }
-        .mt-32 { margin-top: var(--space-32); }
+        /* Layout Containers */
+        .container { width: 100%; max-width: var(--container-lg); margin: 0 auto; padding: 0 var(--space-6); }
+        .container-narrow { max-width: var(--container-md); }
+        
+        .section { padding: var(--space-32) 0; position: relative; z-index: var(--z-content); }
+        .min-h-screen { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
 
-        .pt-header { padding-top: calc(var(--header-height) + var(--space-12)); }
+        /* ==========================================================================
+           03. AMBIENT LIGHT RAINBOW BACKGROUND
+           ========================================================================== */
+        .global-background {
+            position: fixed;
+            inset: 0;
+            z-index: var(--z-bg);
+            background-color: var(--bg-base);
+            overflow: hidden;
+            pointer-events: none;
+        }
 
-        .divider {
-            width: 100%;
-            height: 1px;
-            background-color: var(--border-subtle);
-            margin: var(--space-16) 0;
-            border: none;
+        /* Deep base gradients */
+        .bg-layer-1 {
+            position: absolute;
+            inset: -50%;
+            background: radial-gradient(circle at 50% 50%, rgba(15, 15, 20, 1) 0%, var(--bg-base) 100%);
+        }
+
+        /* The Light Rainbow Effect */
+        .bg-rainbow-aurora {
+            position: absolute;
+            inset: -50%;
+            background: conic-gradient(
+                from 0deg at 50% 50%,
+                rgba(255, 0, 0, 0.03),
+                rgba(255, 165, 0, 0.03),
+                rgba(255, 255, 0, 0.03),
+                rgba(0, 128, 0, 0.03),
+                rgba(0, 0, 255, 0.03),
+                rgba(75, 0, 130, 0.03),
+                rgba(238, 130, 238, 0.03),
+                rgba(255, 0, 0, 0.03)
+            );
+            filter: blur(120px);
+            animation: rotateAurora 20s linear infinite;
+            opacity: 0.8;
+        }
+
+        /* Subtle floating orbs for depth */
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: floatOrb 15s ease-in-out infinite alternate;
+        }
+        .orb-1 { width: 40vw; height: 40vw; background: rgba(59, 130, 246, 0.05); top: 10%; left: 10%; }
+        .orb-2 { width: 50vw; height: 50vw; background: rgba(239, 68, 68, 0.04); bottom: 10%; right: 5%; animation-delay: -5s; }
+
+        @keyframes rotateAurora {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5%, 5%) scale(1.1); }
+        }
+
+        /* Overlay to ensure text readability */
+        .bg-noise {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
         }
 
         /* ==========================================================================
-           05. UI COMPONENTS (BUTTONS, CARDS, BADGES)
+           04. COMPONENTS (BUTTONS, BADGES, LIQUID GLASS)
            ========================================================================== */
         
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--radius-xl);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-medium);
+            backdrop-filter: blur(10px);
+            margin-bottom: var(--space-6);
+        }
+        .badge-dot { width: 8px; height: 8px; border-radius: 50%; margin-right: var(--space-2); }
+        .badge-overt .badge-dot { background: var(--accent-overt); box-shadow: 0 0 10px var(--accent-overt); }
+        .badge-covert .badge-dot { background: var(--accent-covert); box-shadow: 0 0 10px var(--accent-covert); }
+        .badge-dignity .badge-dot { background: var(--accent-dignity); box-shadow: 0 0 10px var(--accent-dignity); }
+
         /* Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem 2.5rem;
-            border-radius: var(--radius-full);
+            padding: 1.25rem 3rem;
+            border-radius: var(--radius-2xl);
             font-size: var(--text-base);
             font-weight: 600;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            text-align: center;
-            transition: all var(--duration-normal) var(--ease-out-expo);
-            user-select: none;
-            white-space: nowrap;
+            border: 1px solid var(--border-strong);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
             z-index: 1;
         }
-
         .btn::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
+            inset: 0;
+            background: var(--text-primary);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: -1;
         }
+        .btn:hover { color: var(--bg-base); border-color: var(--text-primary); }
+        .btn:hover::before { transform: translateY(0); }
 
-        .btn:hover::before { transform: translateX(100%); }
-
-        .btn-primary {
-            background-color: var(--text-primary);
-            color: var(--bg-base);
-            border: 1px solid var(--text-primary);
+        /* Liquid Glass Rainbow Border (Taskbar & Cards) */
+        @keyframes vibrantRainbowLiquid {
+            0%   { border-color: hsla(0, 100%, 65%, 1);   box-shadow: 0 4px 30px hsla(0, 100%, 65%, 0.15); }
+            20%  { border-color: hsla(72, 100%, 65%, 1);  box-shadow: 0 4px 30px hsla(72, 100%, 65%, 0.15); }
+            40%  { border-color: hsla(144, 100%, 65%, 1); box-shadow: 0 4px 30px hsla(144, 100%, 65%, 0.15); }
+            60%  { border-color: hsla(216, 100%, 65%, 1); box-shadow: 0 4px 30px hsla(216, 100%, 65%, 0.15); }
+            80%  { border-color: hsla(288, 100%, 65%, 1); box-shadow: 0 4px 30px hsla(288, 100%, 65%, 0.15); }
+            100% { border-color: hsla(360, 100%, 65%, 1); box-shadow: 0 4px 30px hsla(360, 100%, 65%, 0.15); }
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
-            color: var(--bg-base);
+        .liquid-glass-rainbow {
+            background: rgba(5, 5, 7, 0.6);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border-bottom: 2px solid;
+            animation: vibrantRainbowLiquid 6s linear infinite;
         }
 
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border-strong);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--bg-surface);
-            border-color: var(--text-primary);
-        }
-
-        /* Cards */
-        .card {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
+        /* Massive Information Cards */
+        .massive-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-medium);
             border-radius: var(--radius-2xl);
             padding: var(--space-12);
-            display: flex;
-            flex-direction: column;
             position: relative;
             overflow: hidden;
-            transition: transform var(--duration-normal) var(--ease-out-expo),
-                        box-shadow var(--duration-normal) var(--ease-out-expo),
-                        border-color var(--duration-normal) var(--ease-out-expo);
-            z-index: 1;
+            backdrop-filter: blur(20px);
+            transition: border-color 0.4s ease;
         }
-
-        .card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
-            pointer-events: none;
+        .massive-card:hover { border-color: var(--border-strong); }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: var(--space-6);
+            margin-bottom: var(--space-8);
         }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--border-medium);
-            background-color: var(--bg-surface-hover);
-        }
-
-        .card-placeholder-text {
-            color: var(--text-tertiary);
+        
+        .placeholder-text-area {
             font-family: var(--font-mono);
-            font-size: var(--text-sm);
-            line-height: 1.8;
-            background: rgba(0,0,0,0.2);
-            padding: var(--space-6);
-            border-radius: var(--radius-md);
-            border: 1px dashed var(--border-strong);
-            margin-top: var(--space-6);
-            min-height: 200px;
+            color: var(--text-secondary);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed var(--border-medium);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            min-height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            line-height: 1.8;
+            margin-bottom: var(--space-8);
+            position: relative;
         }
 
-        /* Badges */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.35rem 1rem;
-            border-radius: var(--radius-full);
-            font-size: var(--text-xs);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-subtle);
-            margin-bottom: var(--space-6);
-            backdrop-filter: blur(8px);
-        }
-
-        .badge-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: var(--space-3);
-        }
-
-        .badge-overt .badge-dot { background-color: var(--accent-overt); box-shadow: 0 0 10px var(--accent-overt); }
-        .badge-covert .badge-dot { background-color: var(--accent-covert); box-shadow: 0 0 10px var(--accent-covert); }
-        .badge-dignity .badge-dot { background-color: var(--accent-dignity); box-shadow: 0 0 10px var(--accent-dignity); }
-
-        /* ==========================================================================
-           06. RAINBOW LIQUID GLASS ENGINE
-           ========================================================================== */
-        @keyframes liquidGlassRainbow {
-            0%   { border-bottom-color: hsla(0, 100%, 65%, 1);   box-shadow: 0 10px 40px hsla(0, 100%, 60%, 0.2), inset 0 -2px 10px hsla(0, 100%, 60%, 0.1); }
-            14%  { border-bottom-color: hsla(50, 100%, 65%, 1);  box-shadow: 0 10px 40px hsla(50, 100%, 60%, 0.2), inset 0 -2px 10px hsla(50, 100%, 60%, 0.1); }
-            28%  { border-bottom-color: hsla(100, 100%, 65%, 1); box-shadow: 0 10px 40px hsla(100, 100%, 60%, 0.2), inset 0 -2px 10px hsla(100, 100%, 60%, 0.1); }
-            42%  { border-bottom-color: hsla(150, 100%, 65%, 1); box-shadow: 0 10px 40px hsla(150, 100%, 60%, 0.2), inset 0 -2px 10px hsla(150, 100%, 60%, 0.1); }
-            57%  { border-bottom-color: hsla(200, 100%, 65%, 1); box-shadow: 0 10px 40px hsla(200, 100%, 60%, 0.2), inset 0 -2px 10px hsla(200, 100%, 60%, 0.1); }
-            71%  { border-bottom-color: hsla(250, 100%, 65%, 1); box-shadow: 0 10px 40px hsla(250, 100%, 60%, 0.2), inset 0 -2px 10px hsla(250, 100%, 60%, 0.1); }
-            85%  { border-bottom-color: hsla(300, 100%, 65%, 1); box-shadow: 0 10px 40px hsla(300, 100%, 60%, 0.2), inset 0 -2px 10px hsla(300, 100%, 60%, 0.1); }
-            100% { border-bottom-color: hsla(360, 100%, 65%, 1); box-shadow: 0 10px 40px hsla(360, 100%, 60%, 0.2), inset 0 -2px 10px hsla(360, 100%, 60%, 0.1); }
-        }
-
-        .liquid-glass-fx {
-            animation: liquidGlassRainbow 6s linear infinite;
-            border-bottom-width: 2px;
-            border-bottom-style: solid;
-            background: rgba(10, 10, 12, 0.7);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-        }
-
-        /* Ambient Glow Backgrounds */
-        .ambient-glow {
+        .placeholder-text-area::before {
+            content: '[AWAITING USER TEXT INPUT]';
             position: absolute;
-            width: 60vw;
-            height: 60vw;
-            background: radial-gradient(circle, rgba(50, 173, 230, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: var(--z-bg);
-            pointer-events: none;
-            filter: blur(60px);
+            top: 1rem; left: 1rem;
+            font-size: 0.7rem; color: var(--text-tertiary);
+        }
+
+        .placeholder-image-area {
+            width: 100%;
+            height: 400px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Graphic Grid for Image Placeholders */
+        .img-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
         }
 
         /* ==========================================================================
-           07. GLOBAL NAVIGATION
+           05. PRELOADER ANIMATION
            ========================================================================== */
-        .site-nav {
+        .preloader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: var(--header-height);
-            z-index: var(--z-header);
-            transition: transform var(--duration-normal) var(--ease-out-expo);
+            inset: 0;
+            z-index: var(--z-loader);
+            background: var(--bg-base);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
-        .site-nav.nav-hidden { transform: translateY(-100%); }
+        .preloader.hide { transform: translateY(-100%); }
 
-        .nav-container {
+        .loader-content { text-align: center; }
+        
+        .loader-svg {
+            width: 100px; height: 100px;
+            margin: 0 auto var(--space-8);
+        }
+        
+        .loader-path {
+            fill: none;
+            stroke: var(--text-primary);
+            stroke-width: 2;
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: drawPath 2.5s ease forwards;
+        }
+
+        @keyframes drawPath {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .loader-counter {
+            font-family: var(--font-mono);
+            font-size: var(--text-3xl);
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+        }
+
+        .loader-bar-bg {
+            width: 300px; height: 2px;
+            background: var(--border-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-bar-fill {
+            position: absolute;
+            top: 0; left: 0; height: 100%; width: 0%;
+            background: var(--text-primary);
+            transition: width 0.1s linear;
+        }
+
+        /* ==========================================================================
+           06. NAVIGATION (LIQUID GLASS)
+           ========================================================================== */
+        .global-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            height: var(--header-height);
+            z-index: var(--z-nav);
+            transition: transform 0.4s ease;
+        }
+
+        .global-nav.nav-up { transform: translateY(-100%); }
+
+        .nav-inner {
+            max-width: var(--container-lg);
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 100%;
-            max-width: var(--container-2xl);
-            margin: 0 auto;
-            padding: 0 var(--space-6);
         }
 
         .nav-brand {
-            font-size: var(--text-lg);
+            font-size: var(--text-xl);
             font-weight: 800;
-            color: var(--text-primary);
-            letter-spacing: -0.03em;
-            text-transform: uppercase;
+            letter-spacing: -0.02em;
             display: flex;
             align-items: center;
-            gap: var(--space-3);
+            gap: var(--space-2);
         }
 
-        .nav-brand svg { width: 24px; height: 24px; }
-
-        .nav-menu {
-            display: flex;
-            gap: var(--space-8);
-        }
-
+        .nav-links { display: flex; gap: var(--space-8); }
+        
         .nav-link {
-            font-size: var(--text-sm);
-            font-weight: 500;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--text-secondary);
+            transition: color 0.3s;
             position: relative;
-            padding: var(--space-2) 0;
-            transition: color var(--duration-fast);
         }
 
-        .nav-link:hover, .nav-link.is-active { color: var(--text-primary); }
-
+        .nav-link:hover, .nav-link.active { color: var(--text-primary); }
+        
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--text-primary);
+            bottom: -5px; left: 0; width: 100%; height: 1px;
+            background: var(--text-primary);
             transform: scaleX(0);
             transform-origin: right;
-            transition: transform var(--duration-normal) var(--ease-out-expo);
+            transition: transform 0.3s ease;
         }
-
-        .nav-link:hover::after, .nav-link.is-active::after {
+        
+        .nav-link.active::after, .nav-link:hover::after {
             transform: scaleX(1);
             transform-origin: left;
         }
 
         /* ==========================================================================
-           08. SPA ROUTING ARCHITECTURE
+           07. SPA ROUTER LAYOUT
            ========================================================================== */
-        #app-mount {
+        .spa-container {
             width: 100%;
-            min-height: 100vh;
             position: relative;
-            overflow: hidden;
+            min-height: 100vh;
         }
 
         .spa-view {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            min-height: 100vh;
-            visibility: hidden;
+            top: 0; left: 0; width: 100%;
             opacity: 0;
-            z-index: 1;
+            visibility: hidden;
             pointer-events: none;
+            z-index: 1;
         }
 
-        .spa-view.is-active {
+        .spa-view.active {
             position: relative;
-            visibility: visible;
             opacity: 1;
-            z-index: 2;
+            visibility: visible;
             pointer-events: auto;
-            animation: viewEnter var(--duration-slow) var(--ease-out-expo) forwards;
-        }
-
-        @keyframes viewEnter {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
+            z-index: 2;
         }
 
         /* ==========================================================================
-           09. VIEW 1: HOME (HERO & INTERACTIVE GAME)
+           08. VIEW SPECIFIC STYLES & GSAP CLASSES
            ========================================================================== */
-        .home-hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-top: var(--header-height);
-            overflow: hidden;
+        
+        .hero-section {
+            padding-top: calc(var(--header-height) + var(--space-24));
+            padding-bottom: var(--space-24);
         }
 
-        .hero-content-wrapper {
-            position: relative;
-            z-index: 10;
-            width: 100%;
+        .content-grid {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .intro-box-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-8);
-            width: 100%;
-            max-width: var(--container-lg);
-            margin-top: var(--space-12);
-        }
-
-        .intro-box {
-            background: rgba(15, 15, 17, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-medium);
-            border-radius: var(--radius-xl);
-            padding: var(--space-10);
-        }
-
-        .intro-box h2 { font-size: var(--text-3xl); margin-bottom: var(--space-4); }
-
-        /* Game Container */
-        .game-wrapper {
-            width: 100%;
-            max-width: var(--container-lg);
-            margin: var(--space-16) auto var(--space-32);
-            background: var(--bg-surface);
-            border: 1px solid var(--border-medium);
-            border-radius: var(--radius-2xl);
-            overflow: hidden;
-            position: relative;
-            box-shadow: var(--shadow-xl);
-        }
-
-        .game-header {
-            padding: var(--space-6) var(--space-8);
-            border-bottom: 1px solid var(--border-subtle);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-surface-hover);
-        }
-
-        .game-title {
-            font-family: var(--font-mono);
-            font-size: var(--text-sm);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: var(--space-3);
-        }
-
-        .game-title-dot {
-            width: 10px; height: 10px; border-radius: 50%;
-            background: var(--accent-overt);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 59, 48, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
-        }
-
-        .game-canvas-container {
-            width: 100%;
-            height: 500px;
-            background: #000;
-            position: relative;
-            cursor: crosshair;
-        }
-
-        canvas#relayGame {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-
-        .game-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.8);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            backdrop-filter: blur(5px);
-        }
-
-        .game-overlay.is-hidden { display: none; }
-
-        /* ==========================================================================
-           10. VIEWS: RESISTANCE PAGES (SIMPLIFIED BOXES)
-           ========================================================================== */
-        .resistance-page {
-            padding-top: calc(var(--header-height) + var(--space-32));
-            padding-bottom: var(--space-32);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .page-title-area {
-            text-align: center;
-            margin-bottom: var(--space-24);
-            max-width: var(--container-md);
-        }
-
-        .simple-box-grid {
-            display: grid;
-            grid-template-columns: 1fr;
             gap: var(--space-16);
-            width: 100%;
-            max-width: var(--container-lg);
+            padding-bottom: var(--space-32);
         }
 
-        .massive-box {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-medium);
-            border-radius: var(--radius-2xl);
-            padding: var(--space-16);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .massive-box-header {
-            border-bottom: 2px solid var(--border-subtle);
-            padding-bottom: var(--space-6);
-            margin-bottom: var(--space-8);
-        }
-
-        .massive-box-title {
-            font-size: var(--text-4xl);
-            color: var(--text-primary);
-        }
+        /* GSAP Animation Utility Classes */
+        .gs-fade-up { opacity: 0; transform: translateY(60px); }
+        .gs-scale-in { opacity: 0; transform: scale(0.95); }
+        .gs-line { overflow: hidden; }
+        .gs-line-inner { display: block; transform: translateY(100%); }
 
         /* ==========================================================================
-           11. MEGA FOOTER
+           09. FOOTER
            ========================================================================== */
         .site-footer {
-            background: var(--bg-surface);
+            background: rgba(5, 5, 7, 0.8);
             border-top: 1px solid var(--border-subtle);
-            padding: var(--space-24) 0 var(--space-12);
+            padding: var(--space-24) 0 var(--space-8);
             margin-top: auto;
+            position: relative;
+            z-index: var(--z-content);
+            backdrop-filter: blur(20px);
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
-            gap: var(--space-16);
+            gap: var(--space-12);
             margin-bottom: var(--space-16);
         }
-
-        .footer-brand h2 { font-family: var(--font-serif); font-size: var(--text-3xl); margin-bottom: var(--space-4); }
-        .footer-brand p { font-size: var(--text-sm); max-width: 300px; color: var(--text-secondary); }
-
-        .footer-nav h4 { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-tertiary); margin-bottom: var(--space-6); }
-        .footer-nav ul { display: flex; flex-direction: column; gap: var(--space-3); }
-        .footer-nav a { font-size: var(--text-sm); color: var(--text-secondary); }
-        .footer-nav a:hover { color: var(--text-primary); }
 
         .footer-bottom {
             border-top: 1px solid var(--border-subtle);
             padding-top: var(--space-8);
             display: flex;
             justify-content: space-between;
-            font-size: var(--text-xs);
-            color: var(--text-tertiary);
             font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
         }
 
-        /* ==========================================================================
-           12. RESPONSIVE MEDIA QUERIES
-           ========================================================================== */
-        @media (max-width: 1024px) {
-            .intro-box-container { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; gap: var(--space-12); }
-            .simple-box-grid { gap: var(--space-8); }
-            .massive-box { padding: var(--space-8); }
-        }
-
-        @media (max-width: 768px) {
-            .nav-menu { display: none; /* Add mobile menu logic if needed */ }
-            .home-hero { padding-top: calc(var(--header-height) + var(--space-16)); }
-            .massive-title { font-size: 4rem; }
-            .game-canvas-container { height: 400px; }
-            .footer-bottom { flex-direction: column; gap: var(--space-4); text-align: center; }
-        }
-
-        /* Utility Classes for GSAP */
-        .gs-reveal { opacity: 0; visibility: hidden; }
     </style>
 </head>
 <body>
 
-    <header class="site-nav liquid-glass-fx" id="siteNav">
-        <div class="nav-container">
-            <a href="#" class="nav-brand" data-route="home">
-                <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 3.8l7.2 14.2H4.8L12 5.8z"/></svg>
-                Archive.
-            </a>
-            <nav class="nav-menu">
-                <a href="#" class="nav-link is-active" data-route="home">Overview</a>
-                <a href="#" class="nav-link" data-route="overt">Overt Resistance</a>
-                <a href="#" class="nav-link" data-route="covert">Covert Resistance</a>
-                <a href="#" class="nav-link" data-route="dignity">Human Dignity</a>
-            </nav>
-        </div>
-    </header>
-
-    <div id="app-mount">
-        
-        <article id="view-home" class="spa-view is-active">
-            <div class="ambient-glow"></div>
-            
-            <section class="home-hero container">
-                <div class="hero-content-wrapper">
-                    <span class="eyebrow gs-reveal">Interactive History Exhibition</span>
-                    <h1 class="massive-title text-center gs-reveal">Resistance <br><span class="serif-italic" style="color: var(--text-secondary);">Resilience.</span></h1>
-                    
-                    <div class="intro-box-container">
-                        <div class="intro-box gs-reveal">
-                            <h2>The Thesis</h2>
-                            <p>History often distills resistance into a handful of armed rebellions. This archive explores the multifaceted nature of defiance—proving that survival itself was a revolutionary act against an institution designed to break human dignity.</p>
-                        </div>
-                        <div class="intro-box gs-reveal">
-                            <h2>The Structure</h2>
-                            <p>Navigate through three dedicated sectors: <strong>Overt</strong> (physical uprisings), <strong>Covert</strong> (psychological sabotage), and <strong>Dignity</strong> (cultural preservation). Engage with the interactive modules below to proceed.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="container gs-reveal">
-                <div class="game-wrapper">
-                    <div class="game-header">
-                        <div class="game-title">
-                            <div class="game-title-dot"></div>
-                            Terminal // Covert Routing Network
-                        </div>
-                        <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary);">STATUS: ENCRYPTED</div>
-                    </div>
-                    
-                    <div class="game-canvas-container" id="gameContainer">
-                        <canvas id="relayGame"></canvas>
-                        
-                        <div class="game-overlay" id="gameStartOverlay">
-                            <h3 style="font-family: var(--font-mono); margin-bottom: var(--space-4);">DECRYPT NETWORK</h3>
-                            <p style="font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-secondary); text-align: center; max-width: 400px; margin-bottom: var(--space-6);">
-                                Covert resistance required perfectly timed communication. Click the nodes to rotate the signal paths. Connect the source (Left) to the destination (Right) to bypass the overseer's encryption.
-                            </p>
-                            <button class="btn btn-primary" id="startGameBtn" style="font-family: var(--font-mono);">INITIALIZE HACK</button>
-                        </div>
-
-                        <div class="game-overlay is-hidden" id="gameWinOverlay">
-                            <h3 style="font-family: var(--font-mono); color: var(--accent-success); margin-bottom: var(--space-4);">NETWORK SECURED</h3>
-                            <p style="font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-secondary); text-align: center; max-width: 400px; margin-bottom: var(--space-6);">
-                                Signal successfully routed. The hush harbor has received the message. You may now access the archive sectors safely.
-                            </p>
-                            <button class="btn btn-secondary" id="resetGameBtn" style="font-family: var(--font-mono);">REROUTE (PLAY AGAIN)</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </article>
-
-        <article id="view-overt" class="spa-view">
-            <div class="ambient-glow" style="background: radial-gradient(circle, rgba(255, 59, 48, 0.1) 0%, transparent 70%);"></div>
-            
-            <section class="resistance-page container">
-                <div class="page-title-area gs-reveal">
-                    <div class="badge badge-overt"><span class="badge-dot"></span>Sector 01</div>
-                    <h1 class="display-title">Overt Defiance.</h1>
-                    <p class="lead">The physical dismantling of the slaver system. Armed rebellion, self-emancipation, and direct confrontation.</p>
-                </div>
-
-                <div class="simple-box-grid">
-                    
-                    <div class="massive-box gs-reveal">
-                        <div class="massive-box-header">
-                            <h2 class="massive-box-title">Historical Context</h2>
-                        </div>
-                        <div class="card-placeholder-text">
-                            [PLACEHOLDER FOR TEXT: Discuss the events of the Stono Rebellion or Nat Turner's Uprising. Explain the immense physical risk involved, the organization required, and the immediate brutal retaliation by the slaver class.]
-                        </div>
-                    </div>
-
-                    <div class="massive-box gs-reveal">
-                        <div class="massive-box-header">
-                            <h2 class="massive-box-title">Self-Emancipation (Running Away)</h2>
-                        </div>
-                        <div class="card-placeholder-text">
-                            [PLACEHOLDER FOR TEXT: Discuss Grand Marronage. Insert primary source quotes from runaway advertisements. Explain the logistics of the Underground Railroad and the sheer physical endurance required to escape.]
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-        </article>
-
-        <article id="view-covert" class="spa-view">
-            <div class="ambient-glow" style="background: radial-gradient(circle, rgba(50, 173, 230, 0.1) 0%, transparent 70%);"></div>
-            
-            <section class="resistance-page container">
-                <div class="page-title-area gs-reveal">
-                    <div class="badge badge-covert"><span class="badge-dot"></span>Sector 02</div>
-                    <h1 class="display-title">Covert Tactics.</h1>
-                    <p class="lead">Psychological warfare and economic sabotage. The art of fighting the system from within the system.</p>
-                </div>
-
-                <div class="simple-box-grid">
-                    
-                    <div class="massive-box gs-reveal">
-                        <div class="massive-box-header">
-                            <h2 class="massive-box-title">Economic Sabotage</h2>
-                        </div>
-                        <div class="card-placeholder-text">
-                            [PLACEHOLDER FOR TEXT: Explain how enslaved individuals feigned illness, broke tools "accidentally," and controlled the pace of work to undermine the plantation's profit margin without drawing fatal physical retaliation.]
-                        </div>
-                    </div>
-
-                    <div class="massive-box gs-reveal">
-                        <div class="massive-box-header">
-                            <h2 class="massive-box-title">Intellectual & Spiritual Defiance</h2>
-                        </div>
-                        <div class="card-placeholder-text">
-                            [PLACEHOLDER FOR TEXT: Discuss the illegal act of learning to read and write. Discuss the 'Hush Harbors'—secret religious meetings in the woods where spirituals were sung, containing coded messages for escape.]
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-        </article>
-
-        <article id="view-dignity" class="spa-view">
-            <div class="ambient-glow" style="background: radial-gradient(circle, rgba(255, 149, 0, 0.1) 0%, transparent 70%);"></div>
-            
-            <section class="resistance-page container">
-                <div class="page-title-area gs-reveal">
-                    <div class="badge badge-dignity"><span class="badge-dot"></span>Sector 03</div>
-                    <h1 class="display-title">Cultural Genesis.</h1>
-                    <p class="lead">Choosing to exist, love, and create culture within a system designed to categorize humans as livestock.</p>
-                </div>
-
-                <div class="simple-box-grid">
-                    
-                    <div class="massive-box gs-reveal">
-                        <div class="massive-box-header">
-                            <h2 class="massive-box-title">Family & Community Bonds</h2>
-                        </div>
-                        <div class="card-placeholder-text">
-                            [PLACEHOLDER FOR TEXT: Detail the profound bravery required to form marriages ("jumping the broom") and have children knowing they could be sold away. Discuss how plantations acted as extended families to raise orphaned children.]
-                        </div>
-                    </div>
-
-                    <div class="massive-box gs-reveal">
-                        <div class="massive-box-header">
-                            <h2 class="massive-box-title">Art, Music & Folklore</h2>
-                        </div>
-                        <div class="card-placeholder-text">
-                            [PLACEHOLDER FOR TEXT: Discuss the creation of unique foodways (soul food origins), music (banjo, drums, call-and-response), and storytelling (Brer Rabbit folklore) that established an independent cultural identity.]
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-        </article>
-
+    <div class="global-background">
+        <div class="bg-layer-1"></div>
+        <div class="bg-rainbow-aurora"></div>
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+        <div class="bg-noise"></div>
     </div>
+
+    <div class="preloader" id="preloader">
+        <div class="loader-content">
+            <svg class="loader-svg" viewBox="0 0 100 100">
+                <path class="loader-path" d="M20,80 L20,20 L80,20 L80,80 Z M20,35 L80,35 M20,50 L80,50 M20,65 L80,65"></path>
+            </svg>
+            <div class="loader-counter" id="loaderCount">0%</div>
+            <div class="loader-bar-bg">
+                <div class="loader-bar-fill" id="loaderFill"></div>
+            </div>
+            <div class="mono" style="margin-top: var(--space-4); color: var(--text-tertiary);">INITIALIZING ARCHIVE...</div>
+        </div>
+    </div>
+
+    <nav class="global-nav liquid-glass-rainbow" id="globalNav">
+        <div class="nav-inner">
+            <div class="nav-brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                EXHIBITION.
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-target="home">Overview</a></li>
+                <li><a href="#" class="nav-link" data-target="overt">Overt</a></li>
+                <li><a href="#" class="nav-link" data-target="covert">Covert</a></li>
+                <li><a href="#" class="nav-link" data-target="dignity">Dignity</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="spa-container">
+
+        <article class="spa-view active" id="view-home">
+            <section class="hero-section container text-center min-h-screen">
+                <span class="eyebrow mono gs-fade-up">Historical Interactive Project</span>
+                <h1 class="title-massive gs-fade-up">Unyielding<br><span class="serif">Humanity.</span></h1>
+                <p class="text-lead mx-auto gs-fade-up" style="margin-top: var(--space-6);">
+                    An interactive digital archive exploring the profound, varied, and unceasing methods of resistance utilized against the institution of American slavery.
+                </p>
+                <div class="gs-fade-up" style="margin-top: var(--space-12);">
+                    <button class="btn" onclick="document.getElementById('home-content').scrollIntoView({behavior:'smooth'})">Enter Exhibition</button>
+                </div>
+            </section>
+
+            <section id="home-content" class="container content-grid">
+                
+                <div class="massive-card gs-scale-in">
+                    <div class="card-header">
+                        <h2 class="title-section">The Thesis of Resilience</h2>
+                        <span class="mono">001</span>
+                    </div>
+                    
+                    <div class="placeholder-text-area">
+                        [HOME TEXT PLACEHOLDER 1]<br><br>
+                        Insert thesis statement here. Discuss how history often reduces resistance to violent uprisings, but true resilience encompassed physical defiance, psychological sabotage, and cultural preservation. This archive proves that survival and existing as a human being was the ultimate act of defiance.
+                    </div>
+                    
+                    <div class="placeholder-image-area">
+                        <div class="img-grid-bg"></div>
+                        <span class="mono" style="z-index: 2;">[CINEMATIC HERO IMAGE / VIDEO MONTAGE PLACEHOLDER]</span>
+                    </div>
+                </div>
+
+                <div class="massive-card gs-scale-in">
+                    <div class="card-header">
+                        <h2 class="title-section">Exhibition Architecture</h2>
+                        <span class="mono">002</span>
+                    </div>
+                    
+                    <div class="placeholder-text-area" style="min-height: 150px;">
+                        [HOME TEXT PLACEHOLDER 2]<br><br>
+                        Explain the navigation of the project. Detail how the user should explore Sector 01 (Overt Resistance), Sector 02 (Covert Warfare), and Sector 03 (Human Dignity). Mention the rubric alignment and historical methodology used to construct this archive.
+                    </div>
+                </div>
+
+            </section>
+        </article>
+
+        <article class="spa-view" id="view-overt">
+            <section class="hero-section container text-center">
+                <div class="badge badge-overt gs-fade-up"><div class="badge-dot"></div>Sector 01</div>
+                <h1 class="title-display gs-fade-up">Physical Defiance.</h1>
+                <p class="text-lead mx-auto gs-fade-up">Direct confrontation and the breaking of chains. Acknowledging the extreme physical risks taken to dismantle the slaver economy.</p>
+            </section>
+
+            <section class="container content-grid">
+                
+                <div class="massive-card gs-scale-in">
+                    <div class="card-header">
+                        <h2 class="title-section">Organized Uprisings</h2>
+                        <span class="mono">ACT I</span>
+                    </div>
+                    
+                    <div class="placeholder-text-area">
+                        [OVERT TEXT PLACEHOLDER 1]<br><br>
+                        Detail specific historical events. Discuss the Stono Rebellion (1739), the German Coast Uprising (1811), or Nat Turner's Rebellion (1831). Explain the military tactics used, the psychological impact on the enslavers, and the subsequent retaliatory laws passed.
+                    </div>
+
+                    <div class="placeholder-image-area">
+                        <div class="img-grid-bg"></div>
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="position: absolute; opacity: 0.5;">
+                            <path d="M12 2L2 22h20L12 2zm0 3.8l7.2 14.2H4.8L12 5.8z"/>
+                        </svg>
+                        <span class="mono" style="z-index: 2; margin-top: 80px;">[HISTORICAL MAP OR WOODCUT IMAGE PLACEHOLDER]</span>
+                    </div>
+                </div>
+
+                <div class="massive-card gs-scale-in">
+                    <div class="card-header">
+                        <h2 class="title-section">Self-Emancipation</h2>
+                        <span class="mono">ACT II</span>
+                    </div>
+                    
+                    <div class="placeholder-text-area">
+                        [OVERT TEXT PLACEHOLDER 2]<br><br>
+                        Discuss Grand Marronage and Petit Marronage. Insert primary source quotes from runaway slave advertisements. Explain the logistics of the Underground Railroad, the navigation by the stars, and the sheer physical endurance required to escape.
+                    </div>
+                </div>
+
+            </section>
+        </article>
+
+        <article class="spa-view" id="view-covert">
+            <section class="hero-section container text-center">
+                <div class="badge badge-covert gs-fade-up"><div class="badge-dot"></div>Sector 02</div>
+                <h1 class="title-display gs-fade-up">The Invisible War.</h1>
+                <p class="text-lead mx-auto gs-fade-up">Psychological warfare, economic sabotage, and intellectual rebellion operating directly beneath the oppressor's gaze.</p>
+            </section>
+
+            <section class="container content-grid">
+                
+                <div class="massive-card gs-scale-in">
+                    <div class="card-header">
+                        <h2 class="title-section">Economic Sabotage</h2>
+                        <span class="mono">TACTIC 01</span>
+                    </div>
+                    
+                    <div class="placeholder-text-area">
+                        [COVERT TEXT PLACEHOLDER 1]<br><br>
+                        Explain how enslaved individuals attacked the plantation's profit margin. Discuss feigned illness, the intentional breaking of tools, leaving gates open to let livestock ruin cash crops, and collective work slowdowns that couldn't be traced to a single individual.
+                    </div>
+
+                    <div class="placeholder-image-area">
+                        <div class="img-grid-bg"></div>
+                        <span class="mono" style="z-index: 2;">[IMAGE PLACEHOLDER: AGRICULTURAL TOOLS / RUINED CROPS]</span>
+                    </div>
+                </div>
+
+                <div class="massive-card gs-scale-in">
+                    <div class="card-header">
+                        <h2 class="title-section">Intellectual Subversion</h2>
+                        <span class="mono">TACTIC 02</span>
+                    </div>
+                    
+                    <div class="placeholder-text-area">
+                        [COVERT TEXT PLACEHOLDER 2]<br><br>
+                        Discuss the illegal acquisition of literacy. How stealing an education was used to forge travel passes and read abolitionist literature. Detail the 'Hush Harbors'—secret midnight meetings in swamps where spirituals were sung containing coded instructions for the Underground Railroad.
+                    </div>
+                </div>
+
+            </section>
+        </article>
+
+        <article class="spa-view" id="view-dignity">
+            <section class="hero-section container text-center">
+                <div class="badge badge-dignity gs-fade-up"><div class="badge-dot"></div>Sector 03</div>
+                <h1 class="title-display gs-fade-up">Cultural Genesis.</h1>
+                <p class="text-lead mx-auto gs-fade-up">The ultimate victory: preserving the soul, creating art, and maintaining humanity in a system designed to deny it.</p>
+            </section>
+
+            <section class="container content-grid">
+                
+                <div class="massive-card gs-scale-in">
+                    <div class="card-header">
+                        <h2 class="title-section">Family & Kinship</h2>
+                        <span class="mono">SOUL 01</span>
+                    </div>
+                    
+                    <div class="placeholder-text-area">
+                        [DIGNITY TEXT PLACEHOLDER 1]<br><br>
+                        Detail the immense bravery required to form families knowing they could be legally separated at an auction block. Discuss marriage rituals like "jumping the broom" and how entire plantation communities formed extended kinship networks to raise orphaned children.
+                    </div>
+
+                    <div class="placeholder-image-area">
+                        <div class="img-grid-bg"></div>
+                        <span class="mono" style="z-index: 2;">[IMAGE PLACEHOLDER: HISTORICAL PORTRAITS OR ART VISUALIZING KINSHIP]</span>
+                    </div>
+                </div>
+
+                <div class="massive-card gs-scale-in">
+                    <div class="card-header">
+                        <h2 class="title-section">Art, Folklore & Music</h2>
+                        <span class="mono">SOUL 02</span>
+                    </div>
+                    
+                    <div class="placeholder-text-area">
+                        [DIGNITY TEXT PLACEHOLDER 2]<br><br>
+                        Discuss the creation of American culture. The invention of the Banjo and polyrhythms. The use of Brer Rabbit folklore to teach children how the weak can outsmart the strong. The cultivation of gardens and creation of complex foodways (soul food) from meager rations.
+                    </div>
+                </div>
+
+            </section>
+        </article>
+
+    </main>
 
     <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-brand">
-                    <h2>Interactive Archive.</h2>
-                    <p>Designed to explore historical truth through modern digital architecture.</p>
+                <div>
+                    <h2 class="serif" style="font-size: var(--text-2xl);">Resistance Archive.</h2>
+                    <p style="color: var(--text-secondary); font-size: var(--text-sm); max-width: 250px;">
+                        Built as a functional prototype for interactive historical education.
+                    </p>
                 </div>
-                <div class="footer-nav">
-                    <h4>Exhibition</h4>
-                    <ul>
-                        <li><a href="#" data-route="home">Overview</a></li>
-                        <li><a href="#" data-route="overt">Sector 01: Overt</a></li>
-                        <li><a href="#" data-route="covert">Sector 02: Covert</a></li>
-                        <li><a href="#" data-route="dignity">Sector 03: Dignity</a></li>
+                <div>
+                    <h4 class="mono" style="color: var(--text-tertiary); margin-bottom: var(--space-4);">SECTORS</h4>
+                    <ul style="display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-sm);">
+                        <li><a href="#" style="color: var(--text-secondary);">01. Physical Defiance</a></li>
+                        <li><a href="#" style="color: var(--text-secondary);">02. The Invisible War</a></li>
+                        <li><a href="#" style="color: var(--text-secondary);">03. Cultural Genesis</a></li>
                     </ul>
                 </div>
-                <div class="footer-nav">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="#">Works Cited</a></li>
-                        <li><a href="#">Process Document</a></li>
-                        <li><a href="#">Rubric Alignment</a></li>
+                <div>
+                    <h4 class="mono" style="color: var(--text-tertiary); margin-bottom: var(--space-4);">DOCUMENTATION</h4>
+                    <ul style="display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-sm);">
+                        <li><a href="#" style="color: var(--text-secondary);">Primary Sources</a></li>
+                        <li><a href="#" style="color: var(--text-secondary);">Rubric Alignment</a></li>
+                        <li><a href="#" style="color: var(--text-secondary);">Artist Statement</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <span>&copy; 2026 Academic Exhibition Project. All rights reserved.</span>
-                <span>System Status: Online. Rainbow Engine Active.</span>
+                <div>&copy; 2026 Academic Exhibition Prototype. All rights reserved.</div>
+                <div>SYSTEM STATUS: RAINBOW ENGINE ONLINE.</div>
             </div>
         </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener("DOMContentLoaded", () => {
             
-            /* ==========================================================================
-               1. SMOOTH SCROLLING (LENIS)
-               ========================================================================== */
+            /* --- 1. Preloader Logic --- */
+            const preloader = document.getElementById('preloader');
+            const countEl = document.getElementById('loaderCount');
+            const fillEl = document.getElementById('loaderFill');
+            let progress = 0;
+
+            // Simulate asset loading
+            const loaderInterval = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 5;
+                if(progress > 100) progress = 100;
+                
+                countEl.innerText = `${progress}%`;
+                fillEl.style.width = `${progress}%`;
+
+                if(progress === 100) {
+                    clearInterval(loaderInterval);
+                    setTimeout(() => {
+                        preloader.classList.add('hide');
+                        setTimeout(() => { preloader.style.display = 'none'; }, 1000);
+                        // Trigger initial view animations
+                        initGSAPForView('home');
+                    }, 800);
+                }
+            }, 150);
+
+            /* --- 2. Lenis Smooth Scrolling --- */
             const lenis = new Lenis({
                 duration: 1.2,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -1112,404 +828,123 @@
                 smooth: true,
             });
 
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
-
-            gsap.registerPlugin(ScrollTrigger);
             lenis.on('scroll', ScrollTrigger.update);
             gsap.ticker.add((time) => { lenis.raf(time * 1000); });
             gsap.ticker.lagSmoothing(0, 0);
 
-            /* ==========================================================================
-               2. SINGLE PAGE APPLICATION (SPA) ROUTER
-               ========================================================================== */
+            /* --- 3. Navbar Hide/Show on Scroll --- */
+            const nav = document.getElementById('globalNav');
+            let lastScroll = 0;
+            
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                if (currentScroll > 100 && currentScroll > lastScroll) {
+                    nav.classList.add('nav-up');
+                } else {
+                    nav.classList.remove('nav-up');
+                }
+                lastScroll = currentScroll;
+            });
+
+            /* --- 4. Single Page Application (SPA) Router --- */
             const views = document.querySelectorAll('.spa-view');
-            const navLinks = document.querySelectorAll('[data-route]');
+            const navLinks = document.querySelectorAll('.nav-link');
 
-            // Initialize GSAP reveals for elements within a view
-            function initReveals(viewId) {
+            function switchView(targetId) {
+                // Scroll to top
+                lenis.scrollTo(0, { immediate: true });
+
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if(link.dataset.target === targetId) link.classList.add('active');
+                });
+
+                // Transition views
+                views.forEach(view => {
+                    if(view.id === `view-${targetId}`) {
+                        view.classList.add('active');
+                        // Re-initialize GSAP animations for the new view
+                        setTimeout(() => { initGSAPForView(targetId); }, 100);
+                    } else {
+                        view.classList.remove('active');
+                    }
+                });
+            }
+
+            // Bind click events to nav
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = link.dataset.target;
+                    switchView(target);
+                });
+            });
+
+            /* --- 5. GSAP ScrollTrigger Animations --- */
+            gsap.registerPlugin(ScrollTrigger);
+
+            function initGSAPForView(viewId) {
+                // Refresh triggers for layout changes
                 ScrollTrigger.refresh();
+                
                 const view = document.getElementById(`view-${viewId}`);
-                if (!view) return;
+                if(!view) return;
 
-                const reveals = view.querySelectorAll('.gs-reveal');
-                reveals.forEach(el => {
-                    // Reset inline styles first
-                    gsap.set(el, { clearProps: "all" });
-                    
+                // Animate elements fading up
+                const fadeUps = view.querySelectorAll('.gs-fade-up');
+                fadeUps.forEach((el, i) => {
                     gsap.fromTo(el, 
-                        { y: 50, autoAlpha: 0 },
-                        { 
-                            y: 0, autoAlpha: 1, duration: 1, ease: "power3.out",
+                        { y: 60, opacity: 0 },
+                        {
+                            y: 0, opacity: 1, 
+                            duration: 1, 
+                            ease: "power3.out",
                             scrollTrigger: {
                                 trigger: el,
                                 start: "top 85%",
+                                toggleActions: "play none none none"
+                            }
+                        }
+                    );
+                });
+
+                // Animate massive cards scaling in
+                const scaleIns = view.querySelectorAll('.gs-scale-in');
+                scaleIns.forEach((el, i) => {
+                    gsap.fromTo(el,
+                        { scale: 0.95, opacity: 0, y: 40 },
+                        {
+                            scale: 1, opacity: 1, y: 0,
+                            duration: 1.2,
+                            ease: "expo.out",
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top 80%",
                                 toggleActions: "play none none reverse"
                             }
                         }
                     );
                 });
-            }
 
-            function navigateTo(route) {
-                lenis.scrollTo(0, { immediate: true });
-
-                // Update active classes
-                navLinks.forEach(link => {
-                    link.classList.remove('is-active');
-                    if (link.getAttribute('data-route') === route) {
-                        link.classList.add('is-active');
-                    }
-                });
-
-                // Hide all, Show target
-                views.forEach(view => {
-                    view.classList.remove('is-active');
-                    view.style.animation = 'none'; 
-                });
-
-                const targetView = document.getElementById(`view-${route}`);
-                if (targetView) {
-                    setTimeout(() => {
-                        targetView.classList.add('is-active');
-                        targetView.style.animation = ''; // trigger CSS animation
-                        initReveals(route);
-                    }, 50);
-                }
-            }
-
-            // Bind click events
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const route = link.getAttribute('data-route');
-                    if (route) navigateTo(route);
-                });
-            });
-
-            // Init first view
-            initReveals('home');
-
-
-            /* ==========================================================================
-               3. MINI INTERACTIVE GAME: THE COVERT NETWORK (CANVAS API)
-               ========================================================================== */
-            const canvas = document.getElementById('relayGame');
-            const ctx = canvas.getContext('2d');
-            const container = document.getElementById('gameContainer');
-            
-            // Overlays
-            const startOverlay = document.getElementById('gameStartOverlay');
-            const winOverlay = document.getElementById('gameWinOverlay');
-            const startBtn = document.getElementById('startGameBtn');
-            const resetBtn = document.getElementById('resetGameBtn');
-
-            let width, height;
-            let nodes = [];
-            let isPlaying = false;
-            let particles = [];
-            
-            // Game Config
-            const gridSize = 4; // 4x4 grid
-            let nodeSize = 40;
-            let spacingX, spacingY;
-            let offsetX, offsetY;
-
-            function resize() {
-                width = container.clientWidth;
-                height = container.clientHeight;
-                canvas.width = width;
-                canvas.height = height;
-                
-                spacingX = width / (gridSize + 1);
-                spacingY = height / (gridSize + 1);
-                offsetX = spacingX;
-                offsetY = spacingY;
-
-                // Update node positions on resize
-                nodes.forEach(node => {
-                    node.x = offsetX + (node.col * spacingX);
-                    node.y = offsetY + (node.row * spacingY);
-                });
-            }
-
-            window.addEventListener('resize', resize);
-
-            // Node Types: 
-            // 0: Straight (Left-Right)
-            // 1: Elbow (Top-Right)
-            // 2: Source (Left side)
-            // 3: Destination (Right side)
-            
-            class Node {
-                constructor(row, col, type, rotation) {
-                    this.row = row;
-                    this.col = col;
-                    this.type = type; // 'line', 'corner', 'source', 'dest'
-                    this.rotation = rotation; // 0, 1, 2, 3 (x 90 deg)
-                    this.targetRotation = rotation;
-                    this.x = 0;
-                    this.y = 0;
-                    this.isPowered = false;
-                }
-
-                // Connections relative to current rotation
-                // Returns array of directions: 0:Top, 1:Right, 2:Bottom, 3:Left
-                getConnections() {
-                    let conn = [];
-                    if (this.type === 'line') {
-                        conn = [1, 3]; // Left-Right by default
-                    } else if (this.type === 'corner') {
-                        conn = [0, 1]; // Top-Right by default
-                    } else if (this.type === 'source') {
-                        return [1]; // Always outputs right
-                    } else if (this.type === 'dest') {
-                        return [3]; // Always accepts left
-                    }
-                    
-                    // Apply rotation
-                    return conn.map(d => (d + this.rotation) % 4);
-                }
-
-                draw() {
-                    ctx.save();
-                    ctx.translate(this.x, this.y);
-                    
-                    // Smooth rotation interpolation
-                    this.rotation += (this.targetRotation - this.rotation) * 0.2;
-                    ctx.rotate(this.rotation * Math.PI / 2);
-
-                    // Colors
-                    const baseColor = this.isPowered ? '#0066cc' : '#333333';
-                    const glowColor = this.isPowered ? 'rgba(0, 102, 204, 0.5)' : 'transparent';
-
-                    ctx.shadowBlur = this.isPowered ? 20 : 0;
-                    ctx.shadowColor = glowColor;
-
-                    // Draw Node Base
-                    ctx.beginPath();
-                    ctx.arc(0, 0, nodeSize/2, 0, Math.PI * 2);
-                    ctx.fillStyle = '#111';
-                    ctx.fill();
-                    ctx.lineWidth = 2;
-                    ctx.strokeStyle = baseColor;
-                    ctx.stroke();
-
-                    // Draw Paths
-                    ctx.lineWidth = 8;
-                    ctx.lineCap = 'round';
-                    ctx.strokeStyle = baseColor;
-
-                    if (this.type === 'source') {
-                        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(nodeSize/1.5, 0); ctx.stroke();
-                        ctx.fillStyle = baseColor; ctx.fill();
-                    } else if (this.type === 'dest') {
-                        ctx.beginPath(); ctx.moveTo(-nodeSize/1.5, 0); ctx.lineTo(0, 0); ctx.stroke();
-                    } else if (this.type === 'line') {
-                        ctx.beginPath(); ctx.moveTo(-nodeSize/2, 0); ctx.lineTo(nodeSize/2, 0); ctx.stroke();
-                    } else if (this.type === 'corner') {
-                        ctx.beginPath(); ctx.moveTo(0, -nodeSize/2); ctx.lineTo(0, 0); ctx.lineTo(nodeSize/2, 0); ctx.stroke();
-                    }
-
-                    ctx.restore();
-                }
-            }
-
-            function initGame() {
-                nodes = [];
-                particles = [];
-                
-                // Fixed puzzle generation for reliable win state
-                // 4x4 Grid. 
-                const layout = [
-                    ['corner', 'line', 'corner', 'line'],
-                    ['line', 'corner', 'corner', 'line'],
-                    ['corner', 'corner', 'line', 'corner'],
-                    ['line', 'line', 'corner', 'corner']
-                ];
-
-                for (let r = 0; r < gridSize; r++) {
-                    for (let c = 0; c < gridSize; c++) {
-                        // Random initial rotation 0-3
-                        let rot = Math.floor(Math.random() * 4);
-                        nodes.push(new Node(r, c, layout[r][c], rot));
-                    }
-                }
-
-                // Add Source (Middle Left) and Dest (Middle Right)
-                nodes.push(new Node(1, -1, 'source', 0));
-                nodes.push(new Node(2, gridSize, 'dest', 0));
-
-                resize();
-                updatePower();
-            }
-
-            function getNode(r, c) {
-                return nodes.find(n => n.row === r && n.col === c);
-            }
-
-            function updatePower() {
-                // Reset all
-                nodes.forEach(n => n.isPowered = false);
-                
-                let source = nodes.find(n => n.type === 'source');
-                if (!source) return;
-                
-                // Breadth First Search to flow power
-                let queue = [source];
-                source.isPowered = true;
-
-                while (queue.length > 0) {
-                    let curr = queue.shift();
-                    let conns = curr.getConnections();
-
-                    // Check neighbors based on connection direction
-                    // 0:Top(-1,0), 1:Right(0,1), 2:Bottom(1,0), 3:Left(0,-1)
-                    conns.forEach(dir => {
-                        let nr = curr.row, nc = curr.col;
-                        let neededDir = -1;
-
-                        if (dir === 0) { nr--; neededDir = 2; } // Up needs neighbor's down
-                        else if (dir === 1) { nc++; neededDir = 3; } // Right needs neighbor's left
-                        else if (dir === 2) { nr++; neededDir = 0; } // Down needs neighbor's up
-                        else if (dir === 3) { nc--; neededDir = 1; } // Left needs neighbor's right
-
-                        let neighbor = getNode(nr, nc);
-                        if (neighbor && !neighbor.isPowered) {
-                            // Check if neighbor has matching connection
-                            if (neighbor.getConnections().includes(neededDir)) {
-                                neighbor.isPowered = true;
-                                queue.push(neighbor);
+                // Parallax effect on placeholder images
+                const images = view.querySelectorAll('.placeholder-image-area');
+                images.forEach(img => {
+                    const bg = img.querySelector('.img-grid-bg');
+                    if(bg) {
+                        gsap.to(bg, {
+                            yPercent: 20,
+                            ease: "none",
+                            scrollTrigger: {
+                                trigger: img,
+                                start: "top bottom",
+                                end: "bottom top",
+                                scrub: true
                             }
-                        }
-                    });
-                }
-
-                // Check Win Condition
-                let dest = nodes.find(n => n.type === 'dest');
-                if (dest && dest.isPowered && isPlaying) {
-                    handleWin();
-                }
-            }
-
-            function handleWin() {
-                isPlaying = false;
-                createExplosion(dest.x, dest.y);
-                setTimeout(() => {
-                    winOverlay.classList.remove('is-hidden');
-                }, 1500);
-            }
-
-            // Click Interaction
-            canvas.addEventListener('click', (e) => {
-                if (!isPlaying) return;
-                const rect = canvas.getBoundingClientRect();
-                const mx = e.clientX - rect.left;
-                const my = e.clientY - rect.top;
-
-                // Find clicked node
-                nodes.forEach(node => {
-                    if (node.type === 'source' || node.type === 'dest') return;
-                    
-                    const dx = mx - node.x;
-                    const dy = my - node.y;
-                    if (Math.sqrt(dx*dx + dy*dy) < nodeSize) {
-                        node.targetRotation += 1; // Rotate 90deg
-                        // Visual click feedback
-                        createClickParticles(mx, my);
+                        });
                     }
                 });
-
-                // Recalculate power after a short delay to allow rotation animation to start
-                setTimeout(updatePower, 50);
-            });
-
-            // Particles System
-            class Particle {
-                constructor(x, y, color) {
-                    this.x = x; this.y = y;
-                    this.vx = (Math.random() - 0.5) * 10;
-                    this.vy = (Math.random() - 0.5) * 10;
-                    this.life = 1.0;
-                    this.color = color;
-                }
-                update() {
-                    this.x += this.vx; this.y += this.vy;
-                    this.life -= 0.02;
-                }
-                draw() {
-                    ctx.globalAlpha = Math.max(0, this.life);
-                    ctx.fillStyle = this.color;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, 3, 0, Math.PI*2);
-                    ctx.fill();
-                    ctx.globalAlpha = 1.0;
-                }
             }
-
-            function createClickParticles(x, y) {
-                for(let i=0; i<5; i++) particles.push(new Particle(x, y, '#ffffff'));
-            }
-
-            let dest; // For win explosion reference
-            function createExplosion() {
-                dest = nodes.find(n => n.type === 'dest');
-                if(!dest) return;
-                for(let i=0; i<50; i++) {
-                    particles.push(new Particle(dest.x, dest.y, '#34c759'));
-                }
-            }
-
-            function gameLoop() {
-                ctx.clearRect(0, 0, width, height);
-
-                // Draw background grid lines (cyber aesthetic)
-                ctx.strokeStyle = '#1a1a1a';
-                ctx.lineWidth = 1;
-                for(let r=0; r<gridSize; r++) {
-                    ctx.beginPath(); ctx.moveTo(0, offsetY + r*spacingY); ctx.lineTo(width, offsetY + r*spacingY); ctx.stroke();
-                }
-                for(let c=0; c<gridSize; c++) {
-                    ctx.beginPath(); ctx.moveTo(offsetX + c*spacingX, 0); ctx.lineTo(offsetX + c*spacingX, height); ctx.stroke();
-                }
-
-                // Draw connections between powered nodes
-                ctx.strokeStyle = 'rgba(0, 102, 204, 0.2)';
-                ctx.lineWidth = 4;
-                nodes.forEach(node => {
-                    node.draw();
-                });
-
-                // Particles
-                for (let i = particles.length - 1; i >= 0; i--) {
-                    particles[i].update();
-                    particles[i].draw();
-                    if (particles[i].life <= 0) particles.splice(i, 1);
-                }
-
-                requestAnimationFrame(gameLoop);
-            }
-
-            // Game Buttons
-            startBtn.addEventListener('click', () => {
-                startOverlay.classList.add('is-hidden');
-                initGame();
-                isPlaying = true;
-            });
-
-            resetBtn.addEventListener('click', () => {
-                winOverlay.classList.add('is-hidden');
-                initGame();
-                isPlaying = true;
-            });
-
-            // Start loop
-            resize();
-            gameLoop();
-
         });
     </script>
 </body>
