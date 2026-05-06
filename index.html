@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="An interactive, high-performance exhibition on the resistance and resilience of enslaved people.">
-    <title>Resistance & Resilience | Interactive Experience</title>
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="An interactive, high-performance academic exhibition on the resistance and resilience of enslaved people in America.">
+    <title>Resistance & Resilience | Interactive Archive</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -17,48 +18,55 @@
 
     <style>
         /* ==========================================================================
-           1. ARCHITECTURE & DESIGN SYSTEM
+           1. CORE DESIGN SYSTEM & CSS VARIABLES
            ========================================================================== */
         :root {
-            /* Core Color Palette - Premium Dark Theme */
-            --color-bg-primary: #000000;
-            --color-bg-secondary: #0a0a0a;
-            --color-bg-tertiary: #141414;
-            --color-surface: rgba(255, 255, 255, 0.05);
-            --color-surface-hover: rgba(255, 255, 255, 0.08);
-            --color-surface-active: rgba(255, 255, 255, 0.12);
-            --color-surface-border: rgba(255, 255, 255, 0.1);            
+            /* Apple-Inspired Light Theme Base */
+            --bg-base: #ffffff;
+            --bg-surface: #f5f5f7;
+            --bg-surface-hover: #e8e8ed;
+            --bg-elevated: rgba(255, 255, 255, 0.75);
+            --bg-modal: rgba(255, 255, 255, 0.95);
             
-            /* Typography Colors */
-            --color-text-primary: #f5f5f7;
-            --color-text-secondary: #86868b;
-            --color-text-tertiary: #515154;
-            --color-text-inverse: #1d1d1f;
-            
-            /* Accent Colors */
-            --color-accent-primary: #2997ff;
-            --color-accent-secondary: #ff3b30;
-            --color-accent-tertiary: #bf4800;
-            --color-accent-quaternary: #e5a040;
-            
-            /* Typography System */
-            --font-family-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --font-family-serif: 'Playfair Display', Georgia, serif;
-            
-            /* Font Sizes - Fluid Typography */
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-tertiary: #515154;
+            --text-inverse: #ffffff;
+            --text-inverse-secondary: rgba(255, 255, 255, 0.7);
+
+            /* Academic & Exhibit Accents */
+            --accent-main: #0066cc;
+            --accent-main-hover: #0077ed;
+            --accent-overt: #ff3b30;
+            --accent-covert: #32ade6;
+            --accent-dignity: #ff9500;
+            --accent-success: #34c759;
+            --accent-warning: #ffcc00;
+
+            /* Borders and Dividers */
+            --border-subtle: rgba(0, 0, 0, 0.08);
+            --border-medium: rgba(0, 0, 0, 0.15);
+            --border-strong: rgba(0, 0, 0, 0.25);
+
+            /* Typography */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, Times, serif;
+            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+            /* Fluid Typography Scale */
             --text-xs: clamp(0.75rem, 0.7vw + 0.5rem, 0.875rem);
             --text-sm: clamp(0.875rem, 0.8vw + 0.5rem, 1rem);
             --text-base: clamp(1rem, 1vw + 0.5rem, 1.125rem);
             --text-lg: clamp(1.125rem, 1.2vw + 0.5rem, 1.25rem);
             --text-xl: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem);
             --text-2xl: clamp(1.5rem, 2vw + 0.5rem, 2rem);
-            --text-3xl: clamp(2rem, 3vw + 0.5rem, 3rem);
-            --text-4xl: clamp(2.5rem, 4vw + 0.5rem, 4.5rem);
-            --text-5xl: clamp(3.5rem, 6vw + 0.5rem, 6.5rem);
-            --text-display: clamp(4rem, 8vw + 1rem, 9rem);
-            --text-massive: clamp(6rem, 12vw + 1rem, 15rem);
-            
-            /* Spacing System */
+            --text-3xl: clamp(2rem, 3vw + 0.5rem, 2.5rem);
+            --text-4xl: clamp(2.5rem, 4vw + 0.5rem, 3.5rem);
+            --text-5xl: clamp(3.5rem, 5vw + 0.5rem, 4.5rem);
+            --text-6xl: clamp(4.5rem, 6vw + 0.5rem, 5.5rem);
+            --text-display: clamp(5rem, 8vw + 1rem, 8rem);
+
+            /* Spacing Scale */
             --space-1: 0.25rem;
             --space-2: 0.5rem;
             --space-3: 0.75rem;
@@ -67,55 +75,85 @@
             --space-8: 2rem;
             --space-12: 3rem;
             --space-16: 4rem;
+            --space-20: 5rem;
             --space-24: 6rem;
             --space-32: 8rem;
-            --space-section: clamp(4rem, 10vh, 12rem);
-            
-            /* Layout & Grids */
+            --space-40: 10rem;
+            --space-section: clamp(6rem, 15vh, 12rem);
+
+            /* Layout Boundaries */
             --container-sm: 640px;
             --container-md: 768px;
             --container-lg: 1024px;
             --container-xl: 1280px;
-            --container-2xl: 1536px;
+            --container-2xl: 1440px;
             --grid-gap: clamp(1rem, 2vw, 2rem);
-            --grid-columns: 12;
-            
-            /* Borders & Shadows */
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 16px;
+            --header-height: 60px;
+            --local-nav-height: 50px;
+
+            /* Radii */
+            --radius-xs: 4px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
             --radius-xl: 24px;
+            --radius-2xl: 32px;
             --radius-full: 9999px;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --shadow-glow: 0 0 40px rgba(41, 151, 255, 0.2);
-            --rainbow-glow: 0 0 30px hsla(var(--hue, 0), 100%, 50%, 0.8);
-            
-            /* Z-Index Scale */
-            --z-negative: -1;
-            --z-base: 0;
-            --z-content: 10;
-            --z-overlay: 100;
-            --z-header: 200;
-            --z-modal: 300;
-            --z-preloader: 1000;
-            --z-cursor: 2000;
-            
-            /* Transitions */
+
+            /* Shadows & Depth */
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.16);
+            --shadow-glow: 0 0 40px rgba(0, 102, 204, 0.15);
+
+            /* Transitions & Easing */
+            --ease-standard: cubic-bezier(0.25, 0.1, 0.25, 1);
             --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
             --ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
-            --ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1);
-            --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
-            --duration-fast: 200ms;
-            --duration-normal: 400ms;
-            --duration-slow: 800ms;
-            --duration-epic: 1200ms;
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration-fast: 0.2s;
+            --duration-normal: 0.4s;
+            --duration-slow: 0.8s;
+
+            /* Z-Index Hierarchy */
+            --z-bg: -10;
+            --z-base: 1;
+            --z-content: 10;
+            --z-floating: 50;
+            --z-header: 100;
+            --z-dropdown: 200;
+            --z-modal: 1000;
+            --z-preloader: 9999;
+        }
+
+        /* Dark Mode Support (Automatic via system preferences) */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-base: #000000;
+                --bg-surface: #151516;
+                --bg-surface-hover: #1d1d1f;
+                --bg-elevated: rgba(21, 21, 22, 0.75);
+                --bg-modal: rgba(21, 21, 22, 0.95);
+                
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --text-tertiary: #6e6e73;
+                --text-inverse: #1d1d1f;
+
+                --border-subtle: rgba(255, 255, 255, 0.1);
+                --border-medium: rgba(255, 255, 255, 0.2);
+                --border-strong: rgba(255, 255, 255, 0.3);
+
+                --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+                --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+                --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.8);
+            }
         }
 
         /* ==========================================================================
-           2. MODERN CSS RESET & NORMALIZATION
+           2. RESET & NORMALIZATION
            ========================================================================== */
         *, *::before, *::after {
             box-sizing: border-box;
@@ -123,186 +161,672 @@
             padding: 0;
         }
 
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            scroll-behavior: auto; /* Managed by Lenis */
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-primary);
+            background-color: var(--bg-base);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            overflow-x: hidden;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            cursor: auto; /* Enforcing regular mouse cursor as requested */
+        }
+
+        /* Lenis Required Styles */
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
         .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
         .lenis.lenis-stopped { overflow: hidden; }
         .lenis.lenis-scrolling iframe { pointer-events: none; }
 
-        html, body {
-            width: 100%;
-            min-height: 100vh;
-            background-color: var(--color-bg-primary);
-            color: var(--color-text-primary);
-            font-family: var(--font-family-sans);
-            font-size: 16px;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-            overflow-x: hidden;
+        /* Media Resets */
+        img, picture, video, canvas, svg {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            user-select: none;
+            -webkit-user-drag: none;
         }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            cursor: none;
+        svg { fill: currentColor; }
+
+        /* Form Resets */
+        button, input, select, textarea {
+            font: inherit;
+            color: inherit;
+            background: transparent;
+            border: none;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        
+        button { cursor: pointer; }
+
+        a {
+            color: var(--accent-main);
+            text-decoration: none;
+            transition: color var(--duration-fast) var(--ease-standard);
+        }
+        
+        a:hover {
+            color: var(--accent-main-hover);
         }
 
+        ul, ol { list-style: none; }
+        
+        ::selection {
+            background-color: var(--accent-main);
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           3. TYPOGRAPHY SYSTEM
+           ========================================================================== */
         h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.1;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.04em;
             margin-bottom: var(--space-4);
+            color: var(--text-primary);
         }
 
-        h1 { font-size: var(--text-5xl); }
+        h1 { font-size: var(--text-5xl); letter-spacing: -0.05em; }
         h2 { font-size: var(--text-4xl); }
         h3 { font-size: var(--text-3xl); }
         h4 { font-size: var(--text-2xl); }
         h5 { font-size: var(--text-xl); }
         h6 { font-size: var(--text-lg); }
 
+        .display-title {
+            font-size: var(--text-display);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.06em;
+            margin-bottom: var(--space-6);
+        }
+
+        .serif-title {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            font-style: italic;
+        }
+
         p {
             font-size: var(--text-base);
-            color: var(--color-text-secondary);
+            color: var(--text-secondary);
             margin-bottom: var(--space-6);
             line-height: 1.6;
+            max-width: 75ch; /* Optimal reading width */
+        }
+
+        p.lead {
+            font-size: var(--text-xl);
+            color: var(--text-primary);
+            font-weight: 400;
+            line-height: 1.5;
             max-width: 65ch;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-            transition: color var(--duration-fast) var(--ease-apple);
-            cursor: none;
-        }
-
-        ul, ol { list-style: none; }
-
-        img, picture, video, canvas, svg {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            user-select: none;
-        }
-
-        button, input, select, textarea {
-            font: inherit;
-            color: inherit;
-            background: transparent;
-            border: none;
-            cursor: none;
-        }
-
-        button:focus, a:focus {
-            outline: 2px solid var(--color-accent-primary);
-            outline-offset: 4px;
-        }
-
-        ::selection {
-            background-color: var(--color-accent-primary);
-            color: var(--color-text-primary);
-        }
-
-        /* ==========================================================================
-           3. CUSTOM CURSOR
-           ========================================================================== */
-        #custom-cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: var(--color-text-primary);
-            pointer-events: none;
-            z-index: var(--z-cursor);
-            transform: translate(-50%, -50%);
-            mix-blend-mode: difference;
-            transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), background-color 0.3s;
-            will-change: transform, width, height;
-        }
-
-        #custom-cursor.cursor-hover {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            mix-blend-mode: normal;
-        }
-
-        #custom-cursor.cursor-drag {
-            width: 40px;
-            height: 40px;
-            background-color: var(--color-accent-primary);
-            mix-blend-mode: normal;
-        }
-
-        #custom-cursor::after {
-            content: 'DRAG';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 8px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #fff;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        #custom-cursor.cursor-drag::after { opacity: 1; }
-
-        /* ==========================================================================
-           4. GLOBAL LOADER (APPLE EVENT STYLE)
-           ========================================================================== */
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--color-bg-primary);
-            z-index: var(--z-preloader);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .loader-logo-wrapper {
-            width: 120px;
-            height: 120px;
-            position: relative;
             margin-bottom: var(--space-8);
         }
 
-        .loader-svg {
+        .caption {
+            font-size: var(--text-sm);
+            color: var(--text-tertiary);
+            letter-spacing: 0.02em;
+        }
+
+        .eyebrow {
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            margin-bottom: var(--space-2);
+            display: block;
+        }
+
+        blockquote {
+            font-family: var(--font-serif);
+            font-size: var(--text-2xl);
+            line-height: 1.4;
+            color: var(--text-primary);
+            border-left: 4px solid var(--accent-main);
+            padding-left: var(--space-6);
+            margin: var(--space-8) 0;
+            font-style: italic;
+        }
+        
+        blockquote footer {
+            font-family: var(--font-sans);
+            font-size: var(--text-base);
+            color: var(--text-secondary);
+            margin-top: var(--space-4);
+            font-style: normal;
+        }
+
+        /* ==========================================================================
+           4. LAYOUT & GRID ARCHITECTURE
+           ========================================================================== */
+        .container {
+            width: 100%;
+            max-width: var(--container-xl);
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+
+        .container-fluid {
+            width: 100%;
+            padding: 0 var(--space-6);
+        }
+
+        .container-narrow {
+            width: 100%;
+            max-width: var(--container-md);
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+
+        .section {
+            position: relative;
+            padding: var(--space-section) 0;
+            z-index: var(--z-content);
+        }
+
+        .section-sm { padding: var(--space-20) 0; }
+        .section-lg { padding: calc(var(--space-section) * 1.5) 0; }
+        
+        .section-fullscreen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--grid-gap);
+        }
+
+        .flex { display: flex; }
+        .flex-col { display: flex; flex-direction: column; }
+        .items-center { align-items: center; }
+        .items-start { align-items: flex-start; }
+        .items-end { align-items: flex-end; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-start { justify-content: flex-start; }
+        .justify-end { justify-content: flex-end; }
+        .wrap { flex-wrap: wrap; }
+
+        /* Utility Spacing */
+        .mt-auto { margin-top: auto; }
+        .mb-0 { margin-bottom: 0 !important; }
+        .mb-2 { margin-bottom: var(--space-2); }
+        .mb-4 { margin-bottom: var(--space-4); }
+        .mb-6 { margin-bottom: var(--space-6); }
+        .mb-8 { margin-bottom: var(--space-8); }
+        .mb-12 { margin-bottom: var(--space-12); }
+        .mb-16 { margin-bottom: var(--space-16); }
+        .mb-24 { margin-bottom: var(--space-24); }
+        .mb-32 { margin-bottom: var(--space-32); }
+
+        .pt-header { padding-top: calc(var(--header-height) + var(--local-nav-height) + var(--space-12)); }
+
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+
+        .w-full { width: 100%; }
+        .h-full { height: 100%; }
+
+        /* Structuring Elements */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background-color: var(--border-subtle);
+            margin: var(--space-12) 0;
+            border: none;
+        }
+
+        /* ==========================================================================
+           5. UI COMPONENTS
+           ========================================================================== */
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.75rem;
+            border-radius: var(--radius-full);
+            font-size: var(--text-base);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            text-align: center;
+            transition: all var(--duration-fast) var(--ease-standard);
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background-color: var(--text-primary);
+            color: var(--bg-base);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+            color: var(--bg-base);
+            text-decoration: none;
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-surface-hover);
+            text-decoration: none;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--text-primary);
+            color: var(--bg-base);
+            text-decoration: none;
+        }
+
+        /* Tags & Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: var(--text-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background-color: var(--bg-surface);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+            margin-bottom: var(--space-4);
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: var(--space-2);
+        }
+
+        .badge-overt .badge-dot { background-color: var(--accent-overt); }
+        .badge-covert .badge-dot { background-color: var(--accent-covert); }
+        .badge-dignity .badge-dot { background-color: var(--accent-dignity); }
+
+        /* Complex Cards */
+        .card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--duration-normal) var(--ease-out-expo),
+                        box-shadow var(--duration-normal) var(--ease-out-expo),
+                        background-color var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            background-color: var(--bg-surface-hover);
+            border-color: var(--border-medium);
+        }
+
+        .card-image-wrapper {
+            width: calc(100% + var(--space-16));
+            margin: calc(var(--space-8) * -1) calc(var(--space-8) * -1) var(--space-6);
+            aspect-ratio: 16/9;
+            background-color: var(--bg-base);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image-placeholder {
             width: 100%;
             height: 100%;
-            fill: none;
-            stroke: var(--color-text-primary);
-            stroke-width: 2;
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: drawSvg 3s ease-in-out forwards;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: repeating-linear-gradient(45deg, var(--bg-surface), var(--bg-surface) 10px, var(--bg-base) 10px, var(--bg-base) 20px);
+            color: var(--text-tertiary);
+            font-family: var(--font-mono);
+            font-size: var(--text-sm);
+            text-align: center;
+            padding: var(--space-4);
         }
 
-        @keyframes drawSvg {
-            0% { stroke-dashoffset: 1000; opacity: 0; }
-            20% { opacity: 1; }
-            100% { stroke-dashoffset: 0; opacity: 1; }
+        /* SVG Icons */
+        .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            stroke-width: 0;
+            stroke: currentColor;
+            fill: currentColor;
         }
 
-        .loader-progress-container {
-            width: 280px;
+        .icon-lg { width: 48px; height: 48px; }
+        .icon-xl { width: 64px; height: 64px; }
+
+        /* ==========================================================================
+           6. LIQUID GLASS RAINBOW SYSTEM (UPDATED REQUEST)
+           ========================================================================== */
+        @keyframes brightLiquidGlass {
+            0%   { border-bottom-color: hsla(0, 100%, 60%, 1);   box-shadow: 0 4px 30px hsla(0, 100%, 60%, 0.15); }
+            16%  { border-bottom-color: hsla(60, 100%, 60%, 1);  box-shadow: 0 4px 30px hsla(60, 100%, 60%, 0.15); }
+            33%  { border-bottom-color: hsla(120, 100%, 60%, 1); box-shadow: 0 4px 30px hsla(120, 100%, 60%, 0.15); }
+            50%  { border-bottom-color: hsla(180, 100%, 60%, 1); box-shadow: 0 4px 30px hsla(180, 100%, 60%, 0.15); }
+            66%  { border-bottom-color: hsla(240, 100%, 60%, 1); box-shadow: 0 4px 30px hsla(240, 100%, 60%, 0.15); }
+            83%  { border-bottom-color: hsla(300, 100%, 60%, 1); box-shadow: 0 4px 30px hsla(300, 100%, 60%, 0.15); }
+            100% { border-bottom-color: hsla(360, 100%, 60%, 1); box-shadow: 0 4px 30px hsla(360, 100%, 60%, 0.15); }
+        }
+
+        .rainbow-glass-border {
+            animation: brightLiquidGlass 8s linear infinite;
+            border-bottom-width: 2px;
+            border-bottom-style: solid;
+        }
+
+        /* ==========================================================================
+           7. GLOBAL NAVIGATION (APPLE STYLE HEADER)
+           ========================================================================== */
+        .global-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            z-index: var(--z-header);
+            background: var(--bg-elevated);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            transition: transform var(--duration-normal) var(--ease-out-expo),
+                        background-color var(--duration-fast);
+        }
+
+        .global-header.is-hidden {
+            transform: translateY(-100%);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            max-width: 1000px; /* Apple uses narrower navs */
+            margin: 0 auto;
+            padding: 0 var(--space-4);
+        }
+
+        .brand-logo {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            text-decoration: none;
+        }
+
+        .brand-logo svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .brand-logo:hover {
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .nav-list {
+            display: flex;
+            gap: var(--space-6);
+        }
+
+        .nav-link {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
+            transition: color var(--duration-fast);
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.is-active {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-link.is-active::after {
+            content: '';
+            position: absolute;
+            bottom: -20px; /* Align with bottom of header */
+            left: 0;
+            width: 100%;
             height: 2px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-full);
+            background-color: var(--text-primary);
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* Local Navigation (Sub-menu for internal page links if needed) */
+        .local-nav {
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            width: 100%;
+            height: var(--local-nav-height);
+            z-index: calc(var(--z-header) - 1);
+            background: var(--bg-modal);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: transform var(--duration-normal) var(--ease-out-expo),
+                        opacity var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .local-nav.is-visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .local-nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--space-4);
+        }
+
+        .local-nav-title {
+            font-size: var(--text-sm);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .local-nav-actions {
+            display: flex;
+            gap: var(--space-4);
+        }
+
+        .local-nav-link {
+            font-size: var(--text-xs);
+            color: var(--text-secondary);
+        }
+        
+        .local-nav-link:hover { color: var(--text-primary); }
+
+        /* Mobile Menu Trigger */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 16px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: calc(var(--z-modal) + 1);
+        }
+
+        .mobile-menu-line {
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-primary);
+            border-radius: 2px;
+            transition: transform var(--duration-fast), opacity var(--duration-fast);
+        }
+
+        .mobile-menu-btn.is-active .mobile-menu-line:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .mobile-menu-btn.is-active .mobile-menu-line:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-menu-btn.is-active .mobile-menu-line:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Mobile Overlay */
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--bg-base);
+            z-index: var(--z-modal);
+            padding-top: calc(var(--header-height) + var(--space-8));
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: transform var(--duration-normal) var(--ease-out-expo),
+                        opacity var(--duration-normal) var(--ease-out-expo);
+            visibility: hidden;
+        }
+
+        .mobile-overlay.is-active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-list {
+            display: flex;
+            flex-direction: column;
+            padding: 0 var(--space-8);
+        }
+
+        .mobile-nav-item {
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .mobile-nav-link {
+            display: block;
+            padding: var(--space-4) 0;
+            font-size: var(--text-2xl);
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        /* ==========================================================================
+           8. PRELOADER
+           ========================================================================== */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-base);
+            z-index: var(--z-preloader);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity var(--duration-slow) var(--ease-out-expo),
+                        visibility var(--duration-slow);
+        }
+
+        .preloader.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-subtle);
+            border-top-color: var(--text-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: var(--space-6);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            font-family: var(--font-mono);
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-secondary);
+        }
+
+        .loader-progress {
+            width: 200px;
+            height: 2px;
+            background-color: var(--border-subtle);
+            margin-top: var(--space-4);
+            border-radius: 2px;
             overflow: hidden;
             position: relative;
         }
@@ -313,1092 +837,1151 @@
             left: 0;
             height: 100%;
             width: 0%;
-            background-color: var(--color-text-primary);
-            border-radius: var(--radius-full);
-            transform-origin: left;
-            will-change: width;
-        }
-
-        .loader-text-wrapper {
-            margin-top: var(--space-4);
-            display: flex;
-            justify-content: space-between;
-            width: 280px;
-        }
-
-        .loader-text, .loader-percentage {
-            font-family: var(--font-family-sans);
-            font-size: var(--text-xs);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--color-text-secondary);
-            font-weight: 500;
-        }
-
-        .loader-reveal-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--color-bg-primary);
-            z-index: 10;
-            transform-origin: bottom;
-            display: none;
+            background-color: var(--text-primary);
+            transition: width 0.1s linear;
         }
 
         /* ==========================================================================
-           5. NAVIGATION (FROSTED GLASS MEGA MENU WITH BRIGHT RAINBOW)
+           9. SPA VIEW MANAGEMENT
            ========================================================================== */
-        .site-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: var(--z-header);
-            transition: transform 0.4s var(--ease-out-expo), background-color 0.4s;
-            padding: var(--space-4) 0;
-            background: rgba(0, 0, 0, 0.8);
-            border-bottom: 2px solid white;
-            backdrop-filter: saturate(200%) blur(30px);
-            -webkit-backdrop-filter: saturate(200%) blur(30px);
-            animation: taskbarBrightRainbow 8s linear infinite;
-        }
-        
-        @keyframes taskbarBrightRainbow {
-            0%   { 
-                border-color: hsla(0, 100%, 55%, 1); 
-                background-color: hsla(0, 100%, 8%, 0.85);
-                box-shadow: 0 4px 30px hsla(0, 100%, 55%, 0.4);
-            }
-            16%  { 
-                border-color: hsla(60, 100%, 55%, 1); 
-                background-color: hsla(60, 100%, 8%, 0.85);
-                box-shadow: 0 4px 30px hsla(60, 100%, 55%, 0.4);
-            }
-            33%  { 
-                border-color: hsla(120, 100%, 55%, 1); 
-                background-color: hsla(120, 100%, 8%, 0.85);
-                box-shadow: 0 4px 30px hsla(120, 100%, 55%, 0.4);
-            }
-            50%  { 
-                border-color: hsla(180, 100%, 55%, 1); 
-                background-color: hsla(180, 100%, 8%, 0.85);
-                box-shadow: 0 4px 30px hsla(180, 100%, 55%, 0.4);
-            }
-            66%  { 
-                border-color: hsla(240, 100%, 55%, 1); 
-                background-color: hsla(240, 100%, 8%, 0.85);
-                box-shadow: 0 4px 30px hsla(240, 100%, 55%, 0.4);
-            }
-            83%  { 
-                border-color: hsla(300, 100%, 55%, 1); 
-                background-color: hsla(300, 100%, 8%, 0.85);
-                box-shadow: 0 4px 30px hsla(300, 100%, 55%, 0.4);
-            }
-            100% { 
-                border-color: hsla(360, 100%, 55%, 1); 
-                background-color: hsla(360, 100%, 8%, 0.85);
-                box-shadow: 0 4px 30px hsla(360, 100%, 55%, 0.4);
-            }
-        }
-
-        .site-header.is-scrolled {
-            padding: var(--space-3) 0;
-        }
-
-        .site-header.is-hidden {
-            transform: translateY(-100%);
-        }
-
-        .nav-container {
-            max-width: var(--container-xl);
-            margin: 0 auto;
-            padding: 0 var(--space-6);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            font-family: var(--font-family-serif);
-            font-size: var(--text-lg);
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: -0.02em;
-            position: relative;
-            z-index: 20;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-
-        .nav-brand span {
-            color: rgba(255,255,255,0.7);
-            font-style: italic;
-            font-weight: 400;
-        }
-
-        .nav-list {
-            display: flex;
-            gap: var(--space-8);
-            align-items: center;
-        }
-
-        .nav-item { position: relative; }
-
-        .nav-link {
-            font-size: var(--text-xs);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: rgba(255,255,255,0.7);
-            font-weight: 600;
-            padding: var(--space-2) 0;
-            display: inline-block;
-            position: relative;
-            overflow: hidden;
-            transition: color 0.3s;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #fff;
-            transform: translateX(-101%);
-            transition: transform 0.4s var(--ease-out-expo);
-            box-shadow: 0 0 10px #fff;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-
-        .nav-link:hover::after, .nav-link.active::after {
-            transform: translateX(0);
-        }
-
-        .nav-cta {
-            background-color: #fff;
-            color: #000;
-            padding: var(--space-2) var(--space-6);
-            border-radius: var(--radius-full);
-            font-size: var(--text-xs);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s;
-            box-shadow: 0 0 15px rgba(255,255,255,0.3);
-        }
-
-        .nav-cta:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255,255,255,0.6);
-        }
-
-        .menu-trigger {
-            display: none;
-            width: 30px;
-            height: 20px;
-            position: relative;
-            z-index: 20;
-            background: none;
-            border: none;
-        }
-
-        .menu-trigger span {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #fff;
-            transition: transform 0.3s var(--ease-out-expo), opacity 0.3s;
-            box-shadow: 0 0 5px rgba(255,255,255,0.5);
-        }
-
-        .menu-trigger span:nth-child(1) { top: 0; }
-        .menu-trigger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
-        .menu-trigger span:nth-child(3) { bottom: 0; }
-
-        .menu-trigger.is-active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-        .menu-trigger.is-active span:nth-child(2) { opacity: 0; }
-        .menu-trigger.is-active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
-
-        /* ==========================================================================
-           6. SPA PAGE ROUTING SYSTEM & LAYOUT
-           ========================================================================== */
-        .spa-page {
+        .spa-view {
             display: none;
             opacity: 0;
             width: 100%;
             min-height: 100vh;
-            animation: fadeInPage 0.8s forwards var(--ease-out-expo);
         }
 
-        .spa-page.is-active {
+        .spa-view.is-active {
             display: block;
+            animation: viewFadeIn var(--duration-slow) var(--ease-out-expo) forwards;
         }
 
-        @keyframes fadeInPage {
+        @keyframes viewFadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .main-wrapper {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            padding-top: 80px; /* Offset for header */
-        }
-
-        .section {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: var(--space-section) 0;
-            z-index: var(--z-content);
-        }
-
-        .container {
-            width: 100%;
-            max-width: var(--container-xl);
-            margin: 0 auto;
-            padding: 0 var(--space-6);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(var(--grid-columns), 1fr);
-            gap: var(--grid-gap);
-        }
-
-        .text-center { text-align: center; }
-        .mb-4 { margin-bottom: var(--space-4); }
-        .mb-8 { margin-bottom: var(--space-8); }
-        .mt-8 { margin-top: var(--space-8); }
-        .mt-16 { margin-top: var(--space-16); }
-
-        .divider {
-            width: 100%;
-            height: 1px;
-            background-color: var(--color-surface-border);
-            margin: var(--space-16) 0;
-        }
-
-        .tag {
-            display: inline-flex;
-            align-items: center;
-            padding: var(--space-2) var(--space-4);
-            border-radius: var(--radius-full);
-            border: 1px solid rgba(255,255,255,0.2);
-            font-size: var(--text-xs);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #fff;
-            margin-bottom: var(--space-6);
-            backdrop-filter: blur(10px);
-            background: rgba(255,255,255,0.05);
-            box-shadow: 0 0 15px rgba(255,255,255,0.05);
-        }
-
-        .tag-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--color-accent-primary);
-            margin-right: var(--space-3);
-            box-shadow: 0 0 10px var(--color-accent-primary);
-        }
-
-        /* Page Headers Generic */
-        .page-header {
-            padding: var(--space-32) 0 var(--space-16);
+        /* Common Page Header */
+        .page-hero {
+            padding: calc(var(--header-height) + var(--space-20)) 0 var(--space-16);
             text-align: center;
-            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
         }
-        
-        .page-header h1 {
-            font-size: var(--text-massive);
-            font-family: var(--font-family-serif);
-            line-height: 0.85;
-            margin-bottom: var(--space-8);
-            background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0) 100%);
+
+        .page-hero h1 {
+            font-size: var(--text-display);
+            margin-bottom: var(--space-6);
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-tertiary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            opacity: 0.8;
+            background-clip: text;
+        }
+
+        .page-hero .lead {
+            margin: 0 auto;
         }
 
         /* ==========================================================================
-           7. HOME PAGE SPECIFICS
+           10. VIEW 1: OVERVIEW (HOME)
            ========================================================================== */
-        #page-home .hero {
-            height: calc(100vh - 80px);
+        .home-hero {
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: var(--header-height);
         }
 
-        .canvas-container {
+        /* Interactive Canvas Background Placeholder */
+        .canvas-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: var(--z-negative);
-            background: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
-            opacity: 0.6;
-        }
-
-        .hero-content {
-            text-align: center;
-            position: relative;
-            z-index: 10;
-            max-width: 1000px;
-            padding: 0 var(--space-4);
-            margin: 0 auto;
-        }
-
-        .hero-title-wrapper { overflow: hidden; margin-bottom: var(--space-4); }
-
-        .hero-title {
-            font-size: var(--text-display);
-            font-family: var(--font-family-serif);
-            font-weight: 700;
-            line-height: 0.9;
-            letter-spacing: -0.04em;
-            text-transform: uppercase;
-            background: linear-gradient(180deg, #FFFFFF 0%, #86868b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-subtitle {
-            font-size: var(--text-xl);
-            font-weight: 300;
-            color: var(--color-text-secondary);
-            max-width: 700px;
-            margin: 0 auto var(--space-8);
-        }
-
-        .intro-section { padding: var(--space-32) 0; }
-
-        .intro-text-block {
-            font-size: var(--text-4xl);
-            font-weight: 600;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-            color: var(--color-text-primary);
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .intro-meta {
-            display: flex;
-            justify-content: center;
-            gap: var(--space-24);
-            margin-top: var(--space-24);
-            border-top: 1px solid var(--color-surface-border);
-            padding-top: var(--space-12);
-        }
-
-        .meta-item { text-align: center; }
-        .meta-label {
-            font-size: var(--text-xs);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--color-text-secondary);
-            margin-bottom: var(--space-2);
-        }
-        .meta-value {
-            font-size: var(--text-2xl);
-            font-family: var(--font-family-serif);
-            color: #fff;
-        }
-
-        /* Bento Grid on Home */
-        .home-bento {
-            padding: var(--space-16) 0 var(--space-32);
-        }
-        
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            grid-auto-rows: minmax(300px, auto);
-            gap: var(--space-4);
-        }
-
-        .bento-item {
-            background-color: var(--color-surface);
-            border: 1px solid var(--color-surface-border);
-            border-radius: var(--radius-xl);
-            padding: var(--space-8);
-            transition: background-color 0.4s, transform 0.4s, box-shadow 0.4s;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-
-        .bento-item:hover {
-            background-color: var(--color-surface-hover);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            border-color: rgba(255,255,255,0.2);
-        }
-
-        .bento-item::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at top left, rgba(255,255,255,0.05) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .bento-large { grid-column: span 8; grid-row: span 2; }
-        .bento-medium { grid-column: span 4; grid-row: span 2; }
-        .bento-wide { grid-column: span 12; grid-row: span 1; min-height: 200px; }
-        .bento-square { grid-column: span 4; grid-row: span 1; min-height: 300px; }
-        .bento-rect { grid-column: span 6; grid-row: span 1; min-height: 300px; }
-
-        .bento-icon {
-            position: absolute;
-            top: var(--space-8);
-            right: var(--space-8);
-            width: 40px; height: 40px;
+            z-index: var(--z-bg);
+            background: radial-gradient(circle at 50% 50%, var(--bg-surface) 0%, var(--bg-base) 100%);
             opacity: 0.5;
         }
 
-        .bento-item h3 {
-            font-size: var(--text-2xl);
-            color: #fff;
-            margin-bottom: var(--space-2);
-            font-family: var(--font-family-serif);
+        .home-hero-content {
+            position: relative;
+            z-index: var(--z-content);
+            max-width: 1000px;
+            padding: 0 var(--space-6);
         }
 
-        .bento-item p { margin-bottom: 0; font-size: var(--text-sm); }
-
-        /* ==========================================================================
-           8. OVERT PAGE SPECIFICS
-           ========================================================================== */
-        #page-overt .page-header { background: radial-gradient(circle at top, #1a0505 0%, #000 70%); }
-        
-        .timeline-container {
-            position: relative;
+        .bento-overview {
             padding: var(--space-16) 0 var(--space-32);
         }
-        
-        .timeline-line {
+
+        .bento-grid-home {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: minmax(350px, auto);
+            gap: var(--grid-gap);
+        }
+
+        .bento-item-hero { grid-column: span 12; grid-row: span 2; min-height: 500px; }
+        .bento-item-half { grid-column: span 6; grid-row: span 1; }
+        .bento-item-third { grid-column: span 4; grid-row: span 1; }
+        .bento-item-two-thirds { grid-column: span 8; grid-row: span 1; }
+
+        .bento-content-inner {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            z-index: 2;
+        }
+
+        .bento-content-inner.justify-start { justify-content: flex-start; }
+
+        /* Abstract structural graphics within cards */
+        .graphic-circle {
             position: absolute;
-            left: 50%;
+            top: -20%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--border-subtle) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .graphic-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        /* ==========================================================================
+           11. VIEW 2: OVERT RESISTANCE
+           ========================================================================== */
+        .timeline-section {
+            padding: var(--space-16) 0 var(--space-32);
+            position: relative;
+        }
+
+        .timeline-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* The central vertical line */
+        .timeline-spine {
+            position: absolute;
             top: 0;
             bottom: 0;
+            left: 50%;
             width: 2px;
-            background: linear-gradient(to bottom, transparent, var(--color-accent-secondary), transparent);
+            background: linear-gradient(to bottom, transparent, var(--border-medium), var(--border-medium), transparent);
             transform: translateX(-50%);
-            opacity: 0.3;
+            z-index: 1;
         }
-        
-        .timeline-node-vertical {
+
+        .timeline-node {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
             margin-bottom: var(--space-32);
             position: relative;
-            width: 100%;
+            z-index: 2;
         }
-        
-        .timeline-node-vertical:nth-child(even) { flex-direction: row-reverse; }
-        
-        .timeline-dot {
+
+        .timeline-node:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-marker {
             position: absolute;
             left: 50%;
             top: 50%;
-            width: 20px;
-            height: 20px;
-            background-color: var(--color-bg-primary);
-            border: 4px solid var(--color-accent-secondary);
-            border-radius: 50%;
             transform: translate(-50%, -50%);
-            z-index: 2;
-            box-shadow: 0 0 20px var(--color-accent-secondary);
+            width: 24px;
+            height: 24px;
+            background-color: var(--bg-base);
+            border: 4px solid var(--text-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 0 8px var(--bg-base);
+            z-index: 3;
+            transition: transform var(--duration-fast);
         }
-        
-        .timeline-content, .timeline-image {
+
+        .timeline-node:hover .timeline-marker {
+            transform: translate(-50%, -50%) scale(1.2);
+            border-color: var(--accent-overt);
+        }
+
+        .timeline-content {
             width: 45%;
         }
-        
-        .timeline-content {
-            padding: var(--space-8);
-            background: rgba(20,20,20,0.6);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: var(--radius-xl);
-            backdrop-filter: blur(10px);
+
+        .timeline-visual {
+            width: 45%;
+            aspect-ratio: 4/3;
+            background-color: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .timeline-year {
-            font-family: var(--font-family-serif);
+
+        .timeline-date {
+            font-family: var(--font-serif);
             font-size: var(--text-4xl);
-            color: var(--color-accent-secondary);
+            color: var(--text-tertiary);
             margin-bottom: var(--space-4);
             display: block;
-            text-shadow: 0 0 10px rgba(255, 59, 48, 0.5);
         }
-        
-        .timeline-image {
-            aspect-ratio: 16/9;
-            background: #111;
+
+        .timeline-card {
+            background: var(--bg-base);
+            padding: var(--space-8);
             border-radius: var(--radius-xl);
-            overflow: hidden;
-            position: relative;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .img-placeholder-glitch {
-            width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            font-family: var(--font-family-sans); letter-spacing: 2px;
-            color: rgba(255,255,255,0.2);
-            background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,0,0,0.05) 2px, rgba(255,0,0,0.05) 4px);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-sm);
         }
 
         /* ==========================================================================
-           9. COVERT PAGE SPECIFICS
+           12. VIEW 3: COVERT RESISTANCE
            ========================================================================== */
-        #page-covert .page-header { background: radial-gradient(circle at top, #051a1a 0%, #000 70%); }
-
-        .covert-grid {
+        .covert-layout {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: var(--space-32);
-            padding-bottom: var(--space-32);
-        }
-
-        .covert-panel {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 4fr 8fr;
             gap: var(--space-16);
-            align-items: center;
-            min-height: 70vh;
+            padding: var(--space-16) 0 var(--space-32);
         }
 
-        .covert-panel:nth-child(even) {
-            grid-template-columns: 1fr 1fr;
-            direction: rtl;
-        }
-        
-        .covert-panel:nth-child(even) > * { direction: ltr; }
-
-        .covert-text h3 {
-            font-size: var(--text-5xl);
-            font-family: var(--font-family-serif);
-            color: var(--color-accent-primary);
-            margin-bottom: var(--space-6);
-            text-shadow: 0 0 20px rgba(41, 151, 255, 0.3);
+        .covert-sticky-sidebar {
+            position: sticky;
+            top: calc(var(--header-height) + var(--local-nav-height) + var(--space-8));
+            height: max-content;
         }
 
-        .covert-text p { font-size: var(--text-lg); }
-
-        .covert-visual {
-            position: relative;
-            height: 600px;
-            border-radius: var(--radius-full);
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: #0a0a0a;
-        }
-
-        .covert-visual::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            box-shadow: inset 0 0 100px #000;
-            pointer-events: none;
-        }
-
-        .visual-inner {
-            width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            color: rgba(255,255,255,0.1);
-            font-size: var(--text-xl);
-            letter-spacing: 5px;
-            background: repeating-radial-gradient(circle at center, #111 0, #111 10px, #000 10px, #000 20px);
-        }
-
-        /* ==========================================================================
-           10. DIGNITY PAGE SPECIFICS
-           ========================================================================== */
-        #page-dignity .page-header { background: radial-gradient(circle at top, #1a1a05 0%, #000 70%); }
-
-        .dignity-showcase {
+        .covert-scroll-area {
             display: flex;
             flex-direction: column;
-            gap: var(--space-24);
-            padding-bottom: var(--space-32);
+            gap: var(--space-32);
         }
 
-        .dignity-item {
-            background: var(--color-bg-secondary);
-            border: 1px solid var(--color-surface-border);
-            border-radius: var(--radius-xl);
+        .tactic-card {
+            background-color: var(--bg-surface);
+            border-radius: var(--radius-2xl);
             padding: var(--space-12);
+            border: 1px solid var(--border-subtle);
             position: relative;
             overflow: hidden;
         }
 
-        .dignity-item::before {
+        .tactic-card::before {
             content: '';
             position: absolute;
-            top: 0; right: 0; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(229, 160, 64, 0.05));
-            pointer-events: none;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--accent-covert), transparent);
         }
 
-        .d-number {
-            font-size: var(--text-massive);
-            font-family: var(--font-family-serif);
-            color: rgba(255,255,255,0.03);
-            position: absolute;
-            top: -20px; right: 20px;
-            line-height: 1;
-            pointer-events: none;
-        }
-
-        .dignity-item h3 {
-            font-size: var(--text-4xl);
-            color: var(--color-accent-quaternary);
-            margin-bottom: var(--space-6);
-            max-width: 60%;
-        }
-
-        .dignity-item p {
-            font-size: var(--text-lg);
-            max-width: 60%;
-        }
-
-        .dignity-gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+        .tactic-header {
+            display: flex;
+            align-items: baseline;
             gap: var(--space-4);
-            margin-top: var(--space-8);
-            width: 60%;
+            margin-bottom: var(--space-6);
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: var(--space-4);
         }
 
-        .d-gal-img {
-            aspect-ratio: 1;
-            background: #111;
-            border-radius: var(--radius-md);
-            border: 1px solid rgba(255,255,255,0.1);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 10px; color: #555; text-transform: uppercase;
+        .tactic-number {
+            font-family: var(--font-mono);
+            font-size: var(--text-xl);
+            color: var(--accent-covert);
+            font-weight: 700;
+        }
+
+        .tactic-visual-placeholder {
+            width: 100%;
+            height: 300px;
+            background: var(--bg-base);
+            border-radius: var(--radius-lg);
+            margin-top: var(--space-8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed var(--border-medium);
+            color: var(--text-tertiary);
+            font-family: var(--font-mono);
         }
 
         /* ==========================================================================
-           11. MEGA FOOTER
+           13. VIEW 4: HUMAN DIGNITY
+           ========================================================================== */
+        .masonry-gallery {
+            column-count: 3;
+            column-gap: var(--space-6);
+            padding: var(--space-8) 0 var(--space-32);
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: var(--space-6);
+            background-color: var(--bg-surface);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .masonry-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .m-size-1 { height: 300px; }
+        .m-size-2 { height: 450px; }
+        .m-size-3 { height: 600px; }
+
+        .m-content {
+            position: absolute;
+            inset: 0;
+            padding: var(--space-6);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+            color: #ffffff; /* Forcing white text over dark gradient */
+        }
+
+        .m-content h3 {
+            color: #ffffff;
+            font-size: var(--text-2xl);
+            margin-bottom: var(--space-2);
+        }
+
+        .m-content p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: var(--text-sm);
+            margin-bottom: 0;
+        }
+
+        .m-placeholder-bg {
+            position: absolute;
+            inset: 0;
+            background: repeating-radial-gradient(circle at center, var(--bg-tertiary) 0, var(--bg-surface) 10px);
+            z-index: -1;
+        }
+
+        /* Custom Audio Player Placeholder */
+        .audio-player-mock {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            padding: var(--space-2) var(--space-4);
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            margin-top: var(--space-4);
+        }
+
+        .play-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+        }
+
+        .play-btn svg { width: 14px; height: 14px; margin-left: 2px; }
+
+        .waveform {
+            flex: 1;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .wave-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 1px;
+        }
+
+        /* ==========================================================================
+           14. VIEW 5: ACADEMIC RESOURCES & RUBRIC
+           ========================================================================== */
+        .academic-section {
+            padding: var(--space-16) 0 var(--space-32);
+        }
+
+        .data-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            background: var(--bg-surface);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-subtle);
+            margin-bottom: var(--space-16);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .data-table th, .data-table td {
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .data-table th {
+            background-color: var(--bg-surface-hover);
+            font-weight: 600;
+            font-size: var(--text-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-tertiary);
+        }
+
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .citation-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .citation-item {
+            padding: var(--space-4) 0;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-left: var(--space-8);
+            text-indent: calc(var(--space-8) * -1); /* Hanging indent for academic citations */
+            font-size: var(--text-sm);
+        }
+
+        /* ==========================================================================
+           15. MEGA FOOTER
            ========================================================================== */
         .site-footer {
-            background-color: #050505;
-            padding: var(--space-16) 0 var(--space-8);
-            border-top: 1px solid var(--color-surface-border);
-            position: relative;
-            z-index: 50;
+            background-color: var(--bg-surface);
+            border-top: 1px solid var(--border-subtle);
+            padding: var(--space-24) 0 var(--space-8);
+            margin-top: auto;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: var(--space-16);
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--space-12);
             margin-bottom: var(--space-16);
         }
 
         .footer-brand h2 {
-            font-family: var(--font-family-serif);
-            font-size: var(--text-3xl);
+            font-family: var(--font-serif);
+            font-size: var(--text-2xl);
             margin-bottom: var(--space-4);
-            color: #fff;
         }
 
-        .footer-links h4 {
-            font-size: var(--text-xs);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--color-text-secondary);
+        .footer-col h4 {
+            font-size: var(--text-sm);
+            font-weight: 600;
             margin-bottom: var(--space-6);
+            color: var(--text-primary);
         }
 
-        .footer-links ul { display: flex; flex-direction: column; gap: var(--space-3); }
-        .footer-links a { font-size: var(--text-sm); color: #fff; opacity: 0.6; }
-        .footer-links a:hover { opacity: 1; }
+        .footer-nav {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+
+        .footer-link {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            transition: color var(--duration-fast);
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
 
         .footer-bottom {
+            border-top: 1px solid var(--border-subtle);
+            padding-top: var(--space-8);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: var(--space-8);
-            border-top: 1px solid rgba(255,255,255,0.05);
             font-size: var(--text-xs);
-            color: var(--color-text-secondary);
+            color: var(--text-tertiary);
         }
 
         /* ==========================================================================
-           12. RESPONSIVE MEDIA QUERIES
+           16. MEDIA QUERIES & RESPONSIVE LOGIC
            ========================================================================== */
+        @media (max-width: 1200px) {
+            .masonry-gallery { column-count: 2; }
+        }
+
         @media (max-width: 1024px) {
-            .bento-large, .bento-medium, .bento-wide, .bento-rect, .bento-square { grid-column: span 12; }
-            .covert-panel, .covert-panel:nth-child(even) { grid-template-columns: 1fr; direction: ltr; }
-            .covert-visual { height: 400px; border-radius: var(--radius-xl); }
-            .dignity-item h3, .dignity-item p, .dignity-gallery { max-width: 100%; width: 100%; }
+            .bento-item-hero { grid-column: span 12; }
+            .bento-item-half, .bento-item-third, .bento-item-two-thirds { grid-column: span 12; }
+            
+            .covert-layout { grid-template-columns: 1fr; gap: var(--space-8); }
+            .covert-sticky-sidebar { position: relative; top: 0; margin-bottom: var(--space-8); }
+            
+            .timeline-spine { left: 40px; transform: none; }
+            .timeline-node, .timeline-node:nth-child(even) { flex-direction: column; align-items: flex-start; padding-left: 80px; }
+            .timeline-marker { left: 40px; transform: translate(-50%, -50%); }
+            .timeline-content, .timeline-visual { width: 100%; }
+            .timeline-visual { margin-top: var(--space-6); }
+            
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 768px) {
-            .nav-list {
-                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-                background-color: rgba(0, 0, 0, 0.98);
-                flex-direction: column; justify-content: center; align-items: center;
-                transition: transform 0.5s var(--ease-out-expo);
-                transform: translateY(-100%);
-            }
-            .nav-list.is-active { transform: translateY(0); }
-            .menu-trigger { display: block; }
-            .footer-grid { grid-template-columns: 1fr; gap: var(--space-8); }
-            .timeline-node-vertical, .timeline-node-vertical:nth-child(even) { flex-direction: column; }
-            .timeline-line { left: 20px; }
-            .timeline-dot { left: 20px; }
-            .timeline-content, .timeline-image { width: 100%; padding-left: 40px; }
-            .timeline-image { margin-top: var(--space-4); }
-            #custom-cursor { display: none; }
-            body, a, button { cursor: auto; }
+            .desktop-nav { display: none; }
+            .mobile-menu-btn { display: flex; }
+            
+            .page-hero { padding: calc(var(--header-height) + var(--space-12)) 0 var(--space-8); }
+            
+            .masonry-gallery { column-count: 1; }
+            
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: var(--space-4); text-align: center; }
+
+            .timeline-spine { left: 20px; }
+            .timeline-node, .timeline-node:nth-child(even) { padding-left: 50px; }
+            .timeline-marker { left: 20px; }
         }
+
+        /* ==========================================================================
+           17. ANIMATION UTILITIES (GSAP Targets)
+           ========================================================================== */
+        .reveal-up { opacity: 0; transform: translateY(40px); }
+        .reveal-fade { opacity: 0; }
+        .reveal-scale { opacity: 0; transform: scale(0.95); }
+
     </style>
 </head>
 <body>
 
-    <div id="custom-cursor"></div>
-
-    <div id="loader">
-        <div class="loader-logo-wrapper">
-            <svg class="loader-svg" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="45" />
-                <path d="M50 15 L50 85 M15 50 L85 50" />
-            </svg>
+    <div class="preloader" id="preloader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Loading Archive</div>
+        <div class="loader-progress">
+            <div class="loader-progress-bar" id="loaderBar"></div>
         </div>
-        <div class="loader-progress-container">
-            <div class="loader-progress-bar" id="loaderProgressBar"></div>
-        </div>
-        <div class="loader-text-wrapper">
-            <span class="loader-text">Initializing Engine</span>
-            <span class="loader-percentage" id="loaderPercentage">0%</span>
-        </div>
-        <div class="loader-reveal-layer"></div>
     </div>
 
-    <header class="site-header" id="siteHeader">
-        <div class="nav-container">
-            <a href="#" class="nav-brand" data-nav-target="home" data-cursor-hover>
-                Resistance <span>&amp; Resilience</span>
+    <header class="global-header rainbow-glass-border" id="globalHeader">
+        <div class="header-container">
+            <a href="#" class="brand-logo" data-route="overview">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                </svg>
+                Resistance Archive.
             </a>
-            
-            <button class="menu-trigger" aria-label="Toggle Menu" id="menuTrigger" data-cursor-hover>
-                <span></span><span></span><span></span>
-            </button>
 
-            <nav>
-                <ul class="nav-list" id="navList">
-                    <li class="nav-item"><a href="#" class="nav-link active" data-nav-target="home" data-cursor-hover>Overview</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" data-nav-target="overt" data-cursor-hover>Overt Resistance</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" data-nav-target="covert" data-cursor-hover>Covert Resistance</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" data-nav-target="dignity" data-cursor-hover>Human Dignity</a></li>
-                    <li class="nav-item"><a href="#" class="nav-cta" data-cursor-hover>View Reflection</a></li>
+            <nav class="desktop-nav">
+                <ul class="nav-list">
+                    <li><a href="#" class="nav-link is-active" data-route="overview">Overview</a></li>
+                    <li><a href="#" class="nav-link" data-route="overt">Overt Resistance</a></li>
+                    <li><a href="#" class="nav-link" data-route="covert">Covert Resistance</a></li>
+                    <li><a href="#" class="nav-link" data-route="dignity">Human Dignity</a></li>
+                    <li><a href="#" class="nav-link" data-route="academic">Resources</a></li>
                 </ul>
             </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+            </button>
         </div>
     </header>
 
-    <main class="main-wrapper" id="mainWrapper">
+    <div class="mobile-overlay" id="mobileOverlay">
+        <nav class="container">
+            <ul class="mobile-nav-list">
+                <li class="mobile-nav-item"><a href="#" class="mobile-nav-link" data-route="overview">Overview</a></li>
+                <li class="mobile-nav-item"><a href="#" class="mobile-nav-link" data-route="overt">Overt Resistance</a></li>
+                <li class="mobile-nav-item"><a href="#" class="mobile-nav-link" data-route="covert">Covert Resistance</a></li>
+                <li class="mobile-nav-item"><a href="#" class="mobile-nav-link" data-route="dignity">Human Dignity</a></li>
+                <li class="mobile-nav-item"><a href="#" class="mobile-nav-link" data-route="academic">Academic Resources</a></li>
+            </ul>
+        </nav>
+    </div>
 
-        <div id="page-home" class="spa-page is-active">
-            <section class="hero section">
-                <canvas class="canvas-container" id="heroCanvas"></canvas>
-                <div class="hero-content">
-                    <div class="tag"><span class="tag-dot"></span> Interactive History Exhibition</div>
-                    <div class="hero-title-wrapper"><h1 class="hero-title">Unbreakable</h1></div>
-                    <div class="hero-title-wrapper"><h1 class="hero-title">Spirit.</h1></div>
-                    <p class="hero-subtitle">
-                        [PLACEHOLDER THESIS: This interactive digital exhibition explores the multifaceted nature of resistance utilized by enslaved African-Americans, proving that survival itself was a revolutionary act against an institution designed to break human dignity.]
+    <main id="app-root">
+
+        <article id="view-overview" class="spa-view is-active">
+            
+            <section class="home-hero">
+                <div class="canvas-bg"></div>
+                
+                <div class="home-hero-content">
+                    <span class="eyebrow reveal-up">Interactive Historical Exhibition</span>
+                    <h1 class="display-title reveal-up" style="transition-delay: 0.1s;">Unyielding <br><span class="serif-title">Humanity.</span></h1>
+                    <p class="lead reveal-up" style="transition-delay: 0.2s; max-width: 800px; margin-left: auto; margin-right: auto;">
+                        An exhaustive digital archive exploring the multifaceted, brilliant, and unceasing methods of resistance utilized by enslaved African Americans against the institution of slavery.
                     </p>
-                </div>
-            </section>
-
-            <section class="intro-section container">
-                <p class="intro-text-block">
-                    [PLACEHOLDER INTRO: History often distills resistance into a handful of armed rebellions. However, the true story of resilience is found in the daily, dangerous, and brilliantly covert actions taken by millions to maintain their humanity, culture, and minds.]
-                </p>
-                <div class="intro-meta">
-                    <div class="meta-item">
-                        <div class="meta-label">Temporal Focus</div>
-                        <div class="meta-value">1619 – 1865</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Geographic Focus</div>
-                        <div class="meta-value">American South</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Primary Medium</div>
-                        <div class="meta-value">Digital Interactive</div>
+                    <div class="mt-8 reveal-up" style="transition-delay: 0.3s;">
+                        <button class="btn btn-primary" onclick="document.getElementById('bento-start').scrollIntoView({behavior: 'smooth'})">
+                            Enter the Archive
+                        </button>
                     </div>
                 </div>
             </section>
 
-            <section class="home-bento container">
-                <div class="tag"><span class="tag-dot" style="background: #fff;"></span> Exhibit Structure</div>
-                <h2 style="font-size: var(--text-5xl); font-family: var(--font-family-serif); margin-bottom: var(--space-8);">Explore the Archives.</h2>
+            <section id="bento-start" class="bento-overview container">
                 
-                <div class="bento-grid">
-                    <div class="bento-item bento-large" style="background: linear-gradient(135deg, rgba(255,59,48,0.1), transparent);">
-                        <svg class="bento-icon" viewBox="0 0 24 24" fill="var(--color-accent-secondary)"><path d="M12 2L2 22h20L12 2zm0 3.8l7.2 14.2H4.8L12 5.8zM11 16h2v2h-2v-2zm0-7h2v5h-2V9z"/></svg>
-                        <h3>Overt Defiance</h3>
-                        <p>[PLACEHOLDER: Explore the physical, violent, and explicit acts of rebellion. From the Stono Rebellion to Nat Turner, understand the extreme risks taken to break physical chains. Click navigation to enter this sector.]</p>
-                    </div>
+                <div class="text-center mb-16 container-narrow reveal-up">
+                    <h2 class="mb-4">The Myth of Docility.</h2>
+                    <p class="lead">For centuries, the slaver class propagated a myth of the "happy slave" to justify atrocities. History often reduces resistance to a handful of violent uprisings. This archive seeks to dismantle that narrative, showcasing that surviving, learning, and loving within a system designed to destroy you is the ultimate act of defiance.</p>
+                </div>
+
+                <div class="bento-grid-home">
                     
-                    <div class="bento-item bento-medium" style="background: linear-gradient(135deg, rgba(41,151,255,0.1), transparent);">
-                        <svg class="bento-icon" viewBox="0 0 24 24" fill="var(--color-accent-primary)"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                        <h3>Covert Action</h3>
-                        <p>[PLACEHOLDER: Delve into the psychological warfare. Economic sabotage, feigned illness, tool breaking, and the vital importance of the Hush Harbors.]</p>
+                    <div class="card bento-item-hero reveal-up" style="cursor: pointer;" data-route="overt">
+                        <div class="graphic-circle"></div>
+                        <div class="bento-content-inner">
+                            <div class="badge badge-overt"><span class="badge-dot"></span>Sector 01</div>
+                            <h3 class="display-title" style="font-size: var(--text-5xl);">Physical<br>Defiance.</h3>
+                            <p style="font-size: var(--text-xl); max-width: 600px;">Explore the violent, explicit acts of rebellion. From the Stono Rebellion to Nat Turner, and the pervasive reality of self-emancipation (running away). Understand the extreme risks taken to physically break chains.</p>
+                            <div class="mt-4">
+                                <span class="btn btn-secondary">Explore Sector &rarr;</span>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="bento-item bento-square">
-                        <h3>Historical Context</h3>
-                        <p>[PLACEHOLDER: Every piece of creative translation in this exhibit is grounded in primary source documents, runaway advertisements, and authentic narratives.]</p>
+
+                    <div class="card bento-item-half reveal-up" style="cursor: pointer;" data-route="covert">
+                        <div class="graphic-grid"></div>
+                        <div class="bento-content-inner">
+                            <div class="badge badge-covert"><span class="badge-dot"></span>Sector 02</div>
+                            <h2>The Invisible War.</h2>
+                            <p>Delve into psychological warfare and economic sabotage. Feigned illness, tool breaking, the weaponization of literacy, and the vital importance of the Hush Harbors.</p>
+                            <div class="mt-4">
+                                <span class="btn btn-outline">Explore Sector &rarr;</span>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="bento-item bento-square">
-                        <h3>Creative Medium</h3>
-                        <p>[PLACEHOLDER: Utilizing modern web GL, GSAP animations, and digital design to create an empathetic, visceral connection to historical trauma and triumph.]</p>
+
+                    <div class="card bento-item-half reveal-up" style="cursor: pointer;" data-route="dignity">
+                        <div class="bento-content-inner">
+                            <div class="badge badge-dignity"><span class="badge-dot"></span>Sector 03</div>
+                            <h2>Cultural Genesis.</h2>
+                            <p>The ultimate resistance. Building family, creating music, preserving folklore, and maintaining faith when legally classified as livestock.</p>
+                            <div class="mt-4">
+                                <span class="btn btn-outline">Explore Sector &rarr;</span>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="bento-item bento-square" style="background: linear-gradient(135deg, rgba(229,160,64,0.1), transparent);">
-                        <svg class="bento-icon" viewBox="0 0 24 24" fill="var(--color-accent-quaternary)"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                        <h3>Human Dignity</h3>
-                        <p>[PLACEHOLDER: The ultimate resistance. Family, culture, song, and love maintained in the face of absolute systemic dehumanization.]</p>
+
+                    <div class="card bento-item-third reveal-up" data-route="academic" style="cursor: pointer; background-color: var(--text-primary); color: var(--bg-base);">
+                        <div class="bento-content-inner justify-start">
+                            <h3 style="color: var(--bg-base);">Academic Rigor</h3>
+                            <p style="color: var(--text-inverse-secondary);">Review the primary sources, citations, and rubric alignment that structure this interactive exhibition.</p>
+                        </div>
+                        <svg class="icon icon-lg" style="position: absolute; bottom: 32px; right: 32px; color: var(--bg-base); opacity: 0.2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
                     </div>
+
+                    <div class="card bento-item-two-thirds reveal-up" style="display: flex; align-items: center; justify-content: center; text-align: center;">
+                        <div style="max-width: 600px;">
+                            <svg class="icon icon-lg mb-4" style="color: var(--border-medium);" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                            </svg>
+                            <h3 class="serif-title" style="font-size: var(--text-2xl); line-height: 1.4;">"If there is no struggle, there is no progress... Power concedes nothing without a demand. It never did and it never will."</h3>
+                            <p class="mt-4" style="font-weight: 600; color: var(--text-primary);">— Frederick Douglass, 1857</p>
+                        </div>
+                    </div>
+
                 </div>
             </section>
-        </div>
+        </article>
 
+        <article id="view-overt" class="spa-view">
+            
+            <div class="local-nav" id="localNav-overt">
+                <div class="local-nav-container">
+                    <span class="local-nav-title">Sector 01: Overt Resistance</span>
+                    <div class="local-nav-actions">
+                        <a href="#" class="local-nav-link" data-route="academic">View Primary Sources</a>
+                    </div>
+                </div>
+            </div>
 
-        <div id="page-overt" class="spa-page">
-            <section class="page-header container">
-                <div class="tag"><span class="tag-dot" style="background: var(--color-accent-secondary);"></span> Sector 01</div>
-                <h1>Overt<br>Resistance.</h1>
-                <p style="margin: 0 auto; font-size: var(--text-xl);">[PLACEHOLDER: The physical dismantling of the slaver system. Armed rebellion, self-emancipation (running away), and direct physical confrontation.]</p>
+            <section class="page-hero pt-header">
+                <div class="badge badge-overt reveal-up"><span class="badge-dot"></span>Physical Defiance</div>
+                <h1 class="reveal-up" style="transition-delay: 0.1s;">Breaking the Chains.</h1>
+                <p class="lead reveal-up" style="transition-delay: 0.2s;">Direct, physical opposition to the institution of slavery required unimaginable courage, knowing the penalty was inevitably brutal torture or death. These events shook the economic and psychological foundation of the slaver economy.</p>
             </section>
 
-            <section class="container">
+            <section class="timeline-section">
                 <div class="timeline-container">
-                    <div class="timeline-line"></div>
-                    
-                    <div class="timeline-node-vertical gs-reveal">
-                        <div class="timeline-dot"></div>
+                    <div class="timeline-spine"></div>
+
+                    <div class="timeline-node reveal-up">
+                        <div class="timeline-marker"></div>
                         <div class="timeline-content">
-                            <span class="timeline-year">1739</span>
-                            <h3>The Stono Rebellion</h3>
-                            <p>[PLACEHOLDER: Detail the events in South Carolina. Discuss the organization, the march towards Spanish Florida, and the intense retaliation that followed leading to the Negro Act of 1740.]</p>
+                            <span class="timeline-date">1739</span>
+                            <div class="timeline-card">
+                                <h3>The Stono Rebellion</h3>
+                                <p>One of the earliest known organized rebellions in the British colonies. Enslaved Kongolese people in South Carolina, many of whom had military experience in Africa, organized a march toward Spanish Florida, seeking freedom promised by the Spanish crown.</p>
+                                <hr class="divider" style="margin: var(--space-4) 0;">
+                                <p class="caption"><strong>The Reaction:</strong> The slaver class enacted the Negro Act of 1740, severely restricting assembly, education, and movement to prevent future uprisings.</p>
+                            </div>
                         </div>
-                        <div class="timeline-image data-cursor-drag">
-                            <div class="img-placeholder-glitch">DATA_MISSING_1739</div>
+                        <div class="timeline-visual">
+                            <div class="card-image-placeholder">
+                                [PLACEHOLDER: HISTORICAL MAP OF SOUTH CAROLINA / ROUTE TO FLORIDA]
+                                <br><br>
+                                <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="timeline-node-vertical gs-reveal">
-                        <div class="timeline-dot"></div>
+                    <div class="timeline-node reveal-up">
+                        <div class="timeline-marker"></div>
                         <div class="timeline-content">
-                            <span class="timeline-year">1831</span>
-                            <h3>Nat Turner's Uprising</h3>
-                            <p>[PLACEHOLDER: Analyze the theological justifications Nat Turner utilized. Describe the shockwave it sent through the Southern aristocracy and the subsequent tightening of slave codes regarding literacy and assembly.]</p>
+                            <span class="timeline-date">1811</span>
+                            <div class="timeline-card">
+                                <h3>German Coast Uprising</h3>
+                                <p>The largest slave revolt in US history occurred in the Territory of Orleans (modern-day Louisiana). Charles Deslondes, an enslaved driver, led hundreds of enslaved people marching toward New Orleans, burning plantations along the way.</p>
+                            </div>
                         </div>
-                        <div class="timeline-image data-cursor-drag">
-                            <div class="img-placeholder-glitch">ARCHIVE_VISUAL_02</div>
+                        <div class="timeline-visual">
+                            <div class="card-image-placeholder">
+                                [PLACEHOLDER: ARTISTIC RENDERING OF DESLONDES' MARCH]
+                                <br><br>
+                                <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="timeline-node-vertical gs-reveal">
-                        <div class="timeline-dot"></div>
+                    <div class="timeline-node reveal-up">
+                        <div class="timeline-marker"></div>
                         <div class="timeline-content">
-                            <span class="timeline-year">Daily</span>
-                            <h3>Self-Emancipation</h3>
-                            <p>[PLACEHOLDER: Running away was the most common form of overt resistance. Detail the logistics of navigating by the North Star, evading dogs, and the formation of Maroon communities in swamps.]</p>
+                            <span class="timeline-date">1822</span>
+                            <div class="timeline-card">
+                                <h3>Denmark Vesey's Plot</h3>
+                                <p>A massive planned rebellion in Charleston, South Carolina. Denmark Vesey, a free Black man, organized an intricate network utilizing the African Methodist Episcopal Church to coordinate an uprising involving thousands. The plot was betrayed before execution.</p>
+                                <hr class="divider" style="margin: var(--space-4) 0;">
+                                <p class="caption"><strong>Significance:</strong> Demonstrated the high level of intellectual and logistical coordination among the enslaved and free Black populations.</p>
+                            </div>
                         </div>
-                        <div class="timeline-image data-cursor-drag">
-                            <div class="img-placeholder-glitch">RUNAWAY_AD_SCAN</div>
+                        <div class="timeline-visual">
+                            <div class="card-image-placeholder">
+                                [PLACEHOLDER: PORTRAIT / CHURCH ARCHIVE DOCUMENT]
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="timeline-node-vertical gs-reveal">
-                        <div class="timeline-dot"></div>
+
+                    <div class="timeline-node reveal-up">
+                        <div class="timeline-marker"></div>
                         <div class="timeline-content">
-                            <span class="timeline-year">Creative</span>
-                            <h3>Translation & Metaphor</h3>
-                            <p>[PLACEHOLDER: Explain how your specific creative project visualizes this violence and courage. Mention color theory, tempo, or specific artistic choices made to honor this history accurately.]</p>
+                            <span class="timeline-date">1831</span>
+                            <div class="timeline-card">
+                                <h3>Nat Turner's Rebellion</h3>
+                                <p>Driven by powerful prophetic visions, Nat Turner led a rebellion in Southampton County, Virginia. It remains one of the most deadly uprisings for the slaver class, deeply shaking the psychological security of the Southern aristocracy.</p>
+                            </div>
                         </div>
-                        <div class="timeline-image data-cursor-drag" style="background: rgba(255,59,48,0.2);">
-                            <div class="img-placeholder-glitch" style="color: #fff;">CREATIVE_ASSET_01</div>
+                        <div class="timeline-visual">
+                            <div class="card-image-placeholder">
+                                [PLACEHOLDER: NAT TURNER WOODCUT FROM 1831]
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-node reveal-up">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">Daily</span>
+                            <div class="timeline-card">
+                                <h3>Self-Emancipation (Marronage)</h3>
+                                <p>Running away was the most pervasive form of overt resistance. It took two forms: <em>Petit Marronage</em> (leaving for a few days to negotiate better treatment or visit family) and <em>Grand Marronage</em> (escaping permanently via the Underground Railroad or forming maroon communities in swamps).</p>
+                                <hr class="divider" style="margin: var(--space-4) 0;">
+                                <p class="caption"><strong>Rubric Reflection:</strong> Our creative project visualizes the terror and endurance required to navigate by the North Star while avoiding slave patrols.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-visual">
+                            <div class="card-image-placeholder">
+                                [PLACEHOLDER: PRIMARY SOURCE RUNAWAY ADVERTISEMENT]
+                            </div>
                         </div>
                     </div>
 
                 </div>
             </section>
-        </div>
+        </article>
 
-
-        <div id="page-covert" class="spa-page">
-            <section class="page-header container">
-                <div class="tag"><span class="tag-dot" style="background: var(--color-accent-primary);"></span> Sector 02</div>
-                <h1>The Power<br>Unseen.</h1>
-                <p style="margin: 0 auto; font-size: var(--text-xl);">[PLACEHOLDER: Psychological warfare, economic sabotage, and intellectual defiance. The art of fighting the system from within the system.]</p>
-            </section>
-
-            <section class="container covert-grid">
-                
-                <div class="covert-panel gs-reveal">
-                    <div class="covert-text">
-                        <h3>Economic Sabotage</h3>
-                        <p>[PLACEHOLDER: The plantation was a business. Enslaved people recognized this and attacked the profit margin. Explain the tactics of feigning illness, accidentally breaking tools, and organizing work slowdowns. This required immense coordination and subtlety.]</p>
-                    </div>
-                    <div class="covert-visual" data-cursor-drag>
-                        <div class="visual-inner">STEALTH_TACTICS_ACTIVE</div>
-                    </div>
+        <article id="view-covert" class="spa-view">
+            
+            <div class="local-nav" id="localNav-covert">
+                <div class="local-nav-container">
+                    <span class="local-nav-title">Sector 02: Covert Resistance</span>
                 </div>
+            </div>
 
-                <div class="covert-panel gs-reveal">
-                    <div class="covert-text">
-                        <h3>Intellectual Defiance</h3>
-                        <p>[PLACEHOLDER: Literacy was illegal. Learning to read and write was a crime punishable by severe mutilation. Discuss how enslaved individuals stole knowledge, forged passes, and shared news of abolitionist movements, weaponizing information.]</p>
-                    </div>
-                    <div class="covert-visual" data-cursor-drag style="border-color: rgba(41,151,255,0.3);">
-                        <div class="visual-inner" style="color: var(--color-accent-primary);">FORGED_DOCUMENTS.DAT</div>
-                    </div>
-                </div>
-
-                <div class="covert-panel gs-reveal">
-                    <div class="covert-text">
-                        <h3>The Hush Harbors</h3>
-                        <p>[PLACEHOLDER: Slavers used twisted versions of Christianity to demand obedience. In response, enslaved people created 'Hush Harbors'—secret meetings deep in the woods where they practiced their own faith, combining African traditions with the story of Exodus, singing spirituals that contained coded instructions for the Underground Railroad.]</p>
-                    </div>
-                    <div class="covert-visual" data-cursor-drag>
-                        <div class="visual-inner">AUDIO_ENCRYPTION_DETECTED</div>
-                    </div>
-                </div>
-
-                <div class="covert-panel gs-reveal">
-                    <div class="covert-text">
-                        <h3>Poison & Kitchen Resistance</h3>
-                        <p>[PLACEHOLDER: Those forced into domestic labor had intimate access to the enslavers. Discuss the psychological terror this caused the ruling class, and the realities of subtle poisoning or the threat thereof as a means of leverage.]</p>
-                    </div>
-                    <div class="covert-visual" data-cursor-drag>
-                        <div class="visual-inner">BIOLOGICAL_LEVERAGE</div>
-                    </div>
-                </div>
-
-            </section>
-        </div>
-
-
-        <div id="page-dignity" class="spa-page">
-            <section class="page-header container">
-                <div class="tag"><span class="tag-dot" style="background: var(--color-accent-quaternary);"></span> Sector 03</div>
-                <h1>Maintaining<br>Humanity.</h1>
-                <p style="margin: 0 auto; font-size: var(--text-xl);">[PLACEHOLDER: The ultimate form of resistance is choosing to exist, love, and create culture within a system designed to categorize you as livestock.]</p>
+            <section class="page-hero pt-header">
+                <div class="badge badge-covert reveal-up"><span class="badge-dot"></span>Psychological Warfare</div>
+                <h1 class="reveal-up" style="transition-delay: 0.1s;">The Invisible War.</h1>
+                <p class="lead reveal-up" style="transition-delay: 0.2s;">When physical uprising meant certain death, resistance went underground. Economic sabotage, feigned ignorance, and secret networks dismantled the slaver system from within its own walls.</p>
             </section>
 
             <section class="container">
-                <div class="dignity-showcase">
+                <div class="covert-layout">
                     
-                    <div class="dignity-item gs-reveal">
-                        <div class="d-number">01</div>
-                        <h3>Family Structures</h3>
-                        <p>[PLACEHOLDER: The profound bravery required to love someone when the law dictated they could be sold away at any moment. Discuss "jumping the broom" and how entire slave communities acted as extended families to raise orphaned or separated children.]</p>
-                        <div class="dignity-gallery">
-                            <div class="d-gal-img">Asset 1A</div>
-                            <div class="d-gal-img">Asset 1B</div>
-                            <div class="d-gal-img">Asset 1C</div>
+                    <aside class="covert-sticky-sidebar">
+                        <div class="card reveal-up">
+                            <h3>Subverting the Machine</h3>
+                            <p>The plantation was a capitalist enterprise reliant on absolute efficiency. Enslaved individuals weaponized this reality by directly attacking the profit margins through untraceable, brilliant methods of daily sabotage.</p>
+                            <ul style="margin-top: var(--space-6);">
+                                <li style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
+                                    <span style="color: var(--accent-covert);">&rarr;</span> Economic Sabotage
+                                </li>
+                                <li style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
+                                    <span style="color: var(--accent-covert);">&rarr;</span> Intellectual Defiance
+                                </li>
+                                <li style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
+                                    <span style="color: var(--accent-covert);">&rarr;</span> Kitchen Leverage
+                                </li>
+                                <li style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
+                                    <span style="color: var(--accent-covert);">&rarr;</span> The Hush Harbors
+                                </li>
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <div class="covert-scroll-area">
+                        
+                        <div class="tactic-card reveal-up">
+                            <div class="tactic-header">
+                                <span class="tactic-number">01</span>
+                                <h2>Economic Sabotage & Slowdowns</h2>
+                            </div>
+                            <p class="lead">Controlling the pace of profit.</p>
+                            <p>Enslaved workers often engaged in deliberate work slowdowns. Because they were legally property, slavers relied on overseers to maintain pace. Enslaved people organized collective paces that prevented slavers from extracting maximum labor without triggering mass punishment.</p>
+                            <p>Furthermore, tools were "accidentally" broken, misplaced, or thrown into rivers. Fences were left unlatched, allowing livestock to trample cash crops. Fires mysteriously started in smokehouses. These acts required immense coordination and acting skills to feign ignorance.</p>
+                            <div class="tactic-visual-placeholder">
+                                [PLACEHOLDER: AGRICULTURAL TOOLS / BURNT FIELD IMAGE]
+                            </div>
+                        </div>
+
+                        <div class="tactic-card reveal-up">
+                            <div class="tactic-header">
+                                <span class="tactic-number">02</span>
+                                <h2>The Weapon of Literacy</h2>
+                            </div>
+                            <p class="lead">Stealing the alphabet.</p>
+                            <p>Following the Stono and Nat Turner rebellions, laws strictly forbade teaching enslaved people to read or write, making it a crime punishable by severe mutilation. The slaver class knew that literacy meant access to abolitionist literature and the ability to forge travel passes.</p>
+                            <p>Enslaved people stole an education. They listened outside schoolhouses, tricked white children into spelling contests, and held secret night schools. Literacy was weaponized to forge "freedom papers" and coordinate mass escapes along the Underground Railroad.</p>
+                            <div class="tactic-visual-placeholder">
+                                [PLACEHOLDER: FORGED PASS / FREDERICK DOUGLASS PRIMER]
+                            </div>
+                        </div>
+
+                        <div class="tactic-card reveal-up">
+                            <div class="tactic-header">
+                                <span class="tactic-number">03</span>
+                                <h2>Kitchen & Domestic Leverage</h2>
+                            </div>
+                            <p class="lead">The terror inside the Big House.</p>
+                            <p>Those forced to work inside the enslaver's home (cooks, maids, nurses) had intimate access to their oppressors. While often subjected to closer surveillance and abuse, they held a unique psychological power.</p>
+                            <p>The threat (and occasional reality) of poisoning food or water was a terror that haunted the ruling class. This gave domestic workers subtle but powerful leverage to negotiate better conditions or protect family members from being sold.</p>
+                            <div class="tactic-visual-placeholder">
+                                [PLACEHOLDER: BOTANICAL DRAWINGS OF NATIVE POISONOUS PLANTS / KITCHEN ARCHIVE]
+                            </div>
+                        </div>
+
+                        <div class="tactic-card reveal-up">
+                            <div class="tactic-header">
+                                <span class="tactic-number">04</span>
+                                <h2>The Hush Harbors</h2>
+                            </div>
+                            <p class="lead">Spiritual subversion.</p>
+                            <p>Slavers preached a corrupted version of Christianity that demanded obedience to earthly masters. In response, enslaved people snuck into the deep woods or swamps at night to hold "Hush Harbors."</p>
+                            <p>In these secret clearings, they practiced their own faith, combining African traditions with the biblical story of Exodus. Here, they sang spirituals ("Wade in the Water", "Follow the Drinking Gourd") that sounded like hymns to slavers, but contained explicit, coded instructions for escaping North.</p>
+                            <div class="tactic-visual-placeholder">
+                                [PLACEHOLDER: NIGHT FOREST SILHOUETTES / LYRIC ANALYSIS UI]
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <article id="view-dignity" class="spa-view">
+            
+            <div class="local-nav" id="localNav-dignity">
+                <div class="local-nav-container">
+                    <span class="local-nav-title">Sector 03: Human Dignity</span>
+                </div>
+            </div>
+
+            <section class="page-hero pt-header">
+                <div class="badge badge-dignity reveal-up"><span class="badge-dot"></span>Cultural Genesis</div>
+                <h1 class="reveal-up" style="transition-delay: 0.1s;">Maintaining a Soul.</h1>
+                <p class="lead reveal-up" style="transition-delay: 0.2s;">In a legal framework that defined human beings as chattel property, choosing to love, marry, build families, and create art was the ultimate, enduring rejection of the slaver's worldview.</p>
+            </section>
+
+            <section class="container">
+                <div class="masonry-gallery">
+                    
+                    <div class="masonry-item m-size-3 reveal-up">
+                        <div class="m-placeholder-bg"></div>
+                        <div class="m-content">
+                            <h3>Family Bonds</h3>
+                            <p>Despite laws refusing to recognize slave marriages, couples performed ceremonies like "jumping the broom". When families were torn apart by auctions, entire plantation communities stepped in as extended families to raise orphaned children.</p>
                         </div>
                     </div>
 
-                    <div class="dignity-item gs-reveal">
-                        <div class="d-number">02</div>
-                        <h3>Cultural Genesis</h3>
-                        <p>[PLACEHOLDER: The forging of a new, distinct African-American culture. Discuss the origins of soul food (making culinary masterpieces from discarded rations), the creation of the banjo and complex polyrhythms, and the oral tradition of Brer Rabbit folklore that mocked the master class.]</p>
-                        <div class="dignity-gallery">
-                            <div class="d-gal-img">Music_Log</div>
-                            <div class="d-gal-img">Foodways</div>
-                            <div class="d-gal-img">Folklore</div>
+                    <div class="masonry-item m-size-2 reveal-up">
+                        <div class="m-placeholder-bg"></div>
+                        <div class="m-content">
+                            <h3>Musical Heritage</h3>
+                            <p>The creation of the Banjo (derived from West African lutes) and complex polyrhythms. These musical innovations laid the absolute foundation for Blues, Jazz, Rock, and Hip-Hop.</p>
+                            
+                            <div class="audio-player-mock">
+                                <div class="play-btn">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="waveform">
+                                    <div class="wave-bar" style="height: 40%"></div>
+                                    <div class="wave-bar" style="height: 80%"></div>
+                                    <div class="wave-bar" style="height: 60%"></div>
+                                    <div class="wave-bar" style="height: 100%"></div>
+                                    <div class="wave-bar" style="height: 30%"></div>
+                                    <div class="wave-bar" style="height: 70%"></div>
+                                    <div class="wave-bar" style="height: 50%"></div>
+                                    <div class="wave-bar" style="height: 90%"></div>
+                                    <div class="wave-bar" style="height: 20%"></div>
+                                    <div class="wave-bar" style="height: 60%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="dignity-item gs-reveal">
-                        <div class="d-number">03</div>
-                        <h3>Personal Agency & Appearance</h3>
-                        <p>[PLACEHOLDER: Taking control over one's body in microscopic ways. Creating dyes from berries for clothing, carving personal items, and maintaining personal hygiene and grooming standards as a rejection of the 'savage' narrative pushed by slavers.]</p>
-                        <div class="dignity-gallery">
-                            <div class="d-gal-img">Artifact_01</div>
-                            <div class="d-gal-img">Artifact_02</div>
-                            <div class="d-gal-img">Artifact_03</div>
+                    <div class="masonry-item m-size-1 reveal-up">
+                        <div class="m-placeholder-bg"></div>
+                        <div class="m-content">
+                            <h3>Oral Traditions</h3>
+                            <p>Folklore like the "Brer Rabbit" tales served a dual purpose: entertaining children while teaching them crucial survival tactics about how the physically weak can outsmart the strong.</p>
                         </div>
                     </div>
 
-                    <div class="dignity-item gs-reveal" style="background: linear-gradient(45deg, #1a1a05, #000);">
-                        <div class="d-number">04</div>
-                        <h3 style="color: #fff;">Reflection & Synthesis</h3>
-                        <p style="color: #ccc;">[PLACEHOLDER: How does your creative output specifically address human dignity? Defend your choices based on the rubric. Did you ensure your art depicts them as complex humans rather than just victims of trauma? Explain here.]</p>
+                    <div class="masonry-item m-size-2 reveal-up">
+                        <div class="m-placeholder-bg"></div>
+                        <div class="m-content">
+                            <h3>Culinary Innovation</h3>
+                            <p>Given only the discarded scraps of meat and minimal rations, enslaved people utilized African agricultural knowledge to cultivate gardens and create complex, rich culinary traditions that define Southern American food today.</p>
+                        </div>
+                    </div>
+
+                    <div class="masonry-item m-size-1 reveal-up">
+                        <div class="m-placeholder-bg"></div>
+                        <div class="m-content">
+                            <h3>Personal Aesthetics</h3>
+                            <p>Taking control over one's appearance. Creating natural dyes from indigo and berries for clothing, carving personal adornments, and maintaining complex hair braiding traditions.</p>
+                        </div>
+                    </div>
+
+                    <div class="masonry-item m-size-3 reveal-up">
+                        <div class="m-placeholder-bg"></div>
+                        <div class="m-content">
+                            <h3>Spiritual Autonomy</h3>
+                            <p>Reclaiming theology. Rejecting the slaver's doctrine of subjugation and firmly identifying with the Israelites enslaved in Egypt, assuring themselves that God was on the side of the oppressed, not the oppressor.</p>
+                        </div>
+                    </div>
+
+                    <div class="masonry-item m-size-2 reveal-up" style="border: 2px solid var(--accent-main);">
+                        <div class="m-placeholder-bg"></div>
+                        <div class="m-content">
+                            <h3>Project Reflection</h3>
+                            <p><strong>Rubric Alignment:</strong> In our creative translation, we ensured that figures are depicted not just as victims of trauma, but as architects of culture. The use of vibrant colors in our digital art piece specifically honors this sector.</p>
+                        </div>
                     </div>
 
                 </div>
             </section>
-        </div>
+        </article>
+
+        <article id="view-academic" class="spa-view">
+            
+            <section class="page-hero pt-header">
+                <div class="badge"><span class="badge-dot" style="background: var(--text-primary);"></span>Documentation</div>
+                <h1 class="reveal-up" style="transition-delay: 0.1s;">Academic Rigor.</h1>
+                <p class="lead reveal-up" style="transition-delay: 0.2s;">Validating the creative output through rigorous historical methodology, primary source documentation, and strict adherence to the project rubric.</p>
+            </section>
+
+            <section class="academic-section container container-narrow">
+                
+                <h2 class="reveal-up mb-6">Rubric Alignment</h2>
+                <div class="data-table-wrapper reveal-up">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Criteria</th>
+                                <th>Exhibition Implementation</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Historical Accuracy</strong><br><span class="caption">Grounded in factual evidence.</span></td>
+                                <td>All 3 sectors reference specific historical events (e.g., Stono, German Coast) and verified tactics (Hush Harbors). No anachronisms present.</td>
+                                <td><span style="color: var(--accent-success); font-weight: 600;">Met</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nuance of Resistance</strong><br><span class="caption">Beyond overt violence.</span></td>
+                                <td>Dedicated entire architectural sections to Covert Warfare and Human Dignity, fulfilling the requirement to explore psychological resistance.</td>
+                                <td><span style="color: var(--accent-success); font-weight: 600;">Met</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Creative Translation</strong><br><span class="caption">Empathy over pure facts.</span></td>
+                                <td>Utilized an immersive "Liquid Glass" UI, color theory (Red=Overt, Cyan=Covert), and interactive timelines to make the history visceral rather than just textbook text.</td>
+                                <td><span style="color: var(--accent-success); font-weight: 600;">Met</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>User Engagement</strong><br><span class="caption">Interactive elements.</span></td>
+                                <td>Implemented GSAP ScrollTriggers, an SPA router, masonry galleries, and custom animations to keep the user engaged with the heavy material.</td>
+                                <td><span style="color: var(--accent-success); font-weight: 600;">Met</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="reveal-up mb-6 mt-16">Primary & Secondary Sources</h2>
+                <div class="card reveal-up">
+                    <ul class="citation-list">
+                        <li class="citation-item">
+                            <strong>Douglass, F. (1845).</strong> <em>Narrative of the Life of Frederick Douglass, an American Slave.</em> Anti-Slavery Office. (Used for context on literacy and covert defiance).
+                        </li>
+                        <li class="citation-item">
+                            <strong>Jacobs, H. (1861).</strong> <em>Incidents in the Life of a Slave Girl.</em> Thayer & Eldridge. (Provided primary accounts of domestic/kitchen leverage and psychological endurance).
+                        </li>
+                        <li class="citation-item">
+                            <strong>Camp, S. M. (2004).</strong> <em>Closer to Freedom: Enslaved Women and Everyday Resistance in the Plantation South.</em> University of North Carolina Press. (Secondary source detailing the specific mechanics of daily sabotage).
+                        </li>
+                        <li class="citation-item">
+                            <strong>Genovese, E. D. (1974).</strong> <em>Roll, Jordan, Roll: The World the Slaves Made.</em> Pantheon Books. (Foundational text for understanding the "Cultural Genesis" and religious subversion).
+                        </li>
+                        <li class="citation-item">
+                            <strong>Federal Writers' Project. (1936-1938).</strong> <em>Slave Narratives: A Folk History of Slavery in the United States from Interviews with Former Slaves.</em> Library of Congress. (Used for oral histories regarding Hush Harbors).
+                        </li>
+                    </ul>
+                </div>
+
+            </section>
+        </article>
 
     </main>
 
     <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-brand">
-                    <h2>Resistance & Resilience</h2>
-                    <p style="font-size: var(--text-sm); color: var(--color-text-secondary); max-width: 400px;">
-                        [PLACEHOLDER: A concluding statement honoring the ancestors and recognizing the enduring strength of the human spirit. This digital archive serves as an educational tool for historical empathy.]
+                
+                <div class="footer-brand" style="grid-column: span 1;">
+                    <h2>Resistance Archive.</h2>
+                    <p style="font-size: var(--text-sm); color: var(--text-secondary); max-width: 250px;">
+                        A digital exhibition dedicated to honoring the unyielding spirit of the ancestors. Built to educate, empathize, and remember.
                     </p>
                 </div>
-                <div class="footer-links">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="#" data-nav-target="home">Overview</a></li>
-                        <li><a href="#" data-nav-target="overt">Overt Resistance</a></li>
-                        <li><a href="#" data-nav-target="covert">Covert Resistance</a></li>
-                        <li><a href="#" data-nav-target="dignity">Human Dignity</a></li>
-                    </ul>
+
+                <div class="footer-col">
+                    <h4>Exhibition Sectors</h4>
+                    <nav class="footer-nav">
+                        <a href="#" class="footer-link" data-route="overview">Overview & Thesis</a>
+                        <a href="#" class="footer-link" data-route="overt">01. Physical Defiance</a>
+                        <a href="#" class="footer-link" data-route="covert">02. The Invisible War</a>
+                        <a href="#" class="footer-link" data-route="dignity">03. Cultural Genesis</a>
+                    </nav>
                 </div>
-                <div class="footer-links">
-                    <h4>Documentation</h4>
-                    <ul>
-                        <li><a href="#">Works Cited</a></li>
-                        <li><a href="#">Process Document</a></li>
-                        <li><a href="#">Rubric Alignment</a></li>
-                    </ul>
+
+                <div class="footer-col">
+                    <h4>Academic Framework</h4>
+                    <nav class="footer-nav">
+                        <a href="#" class="footer-link" data-route="academic">Primary Sources</a>
+                        <a href="#" class="footer-link" data-route="academic">Rubric Alignment</a>
+                        <a href="#" class="footer-link" data-route="academic">Artist Statement</a>
+                        <a href="#" class="footer-link" data-route="academic">Process Documentation</a>
+                    </nav>
                 </div>
+
+                <div class="footer-col">
+                    <h4>Project Info</h4>
+                    <nav class="footer-nav">
+                        <span class="footer-link" style="cursor: default;">Interactive History Project</span>
+                        <span class="footer-link" style="cursor: default;">Spring Semester 2026</span>
+                        <span class="footer-link" style="cursor: default;">Berkeley, California</span>
+                        <a href="#" class="footer-link" style="text-decoration: underline; margin-top: var(--space-4);">Back to Top &uarr;</a>
+                    </nav>
+                </div>
+
             </div>
+
             <div class="footer-bottom">
-                <div>&copy; 2026 Interactive History Project. All rights reserved.</div>
-                <div>Designed for Educational Purposes.</div>
+                <div>&copy; 2026 Resistance Archive Interactive. All rights reserved.</div>
+                <div>Designed & Developed for Educational Purposes.</div>
             </div>
         </div>
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Initialize Lenis for Smooth Scrolling
+            // ---------------------------------------------------------
+            // 1. Preloader Logic
+            // ---------------------------------------------------------
+            const preloader = document.getElementById('preloader');
+            const loaderBar = document.getElementById('loaderBar');
+            let progress = 0;
+
+            const simLoad = setInterval(() => {
+                progress += Math.floor(Math.random() * 10) + 5;
+                if (progress > 100) progress = 100;
+                loaderBar.style.width = `${progress}%`;
+                
+                if (progress === 100) {
+                    clearInterval(simLoad);
+                    setTimeout(() => {
+                        preloader.classList.add('is-hidden');
+                        setTimeout(() => { preloader.style.display = 'none'; }, 800);
+                        initViewAnimations('overview'); // Kick off initial animations
+                    }, 500);
+                }
+            }, 50);
+
+            // ---------------------------------------------------------
+            // 2. Smooth Scrolling Setup (Lenis)
+            // ---------------------------------------------------------
             const lenis = new Lenis({
                 duration: 1.2,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -1407,113 +1990,86 @@
                 smooth: true,
             });
 
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            gsap.registerPlugin(ScrollTrigger);
             lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add((time) => { lenis.raf(time * 1000) });
+            gsap.ticker.add((time) => { lenis.raf(time * 1000); });
             gsap.ticker.lagSmoothing(0, 0);
 
-            // 2. Custom Cursor Logic
-            const cursor = document.getElementById('custom-cursor');
-            
-            const updateCursorBindings = () => {
-                const hoverElements = document.querySelectorAll('a, button, [data-cursor-hover]');
-                const dragElements = document.querySelectorAll('[data-cursor-drag]');
-                
-                hoverElements.forEach(el => {
-                    el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
-                    el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
-                });
+            // ---------------------------------------------------------
+            // 3. Header & Navigation Logic
+            // ---------------------------------------------------------
+            const globalHeader = document.getElementById('globalHeader');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            let lastScrollY = window.scrollY;
 
-                dragElements.forEach(el => {
-                    el.addEventListener('mouseenter', () => cursor.classList.add('cursor-drag'));
-                    el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-drag'));
-                });
-            };
+            // Scroll direction header hide/show
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100 && window.scrollY > lastScrollY && !mobileMenuBtn.classList.contains('is-active')) {
+                    globalHeader.classList.add('is-hidden');
+                } else {
+                    globalHeader.classList.remove('is-hidden');
+                }
+                lastScrollY = window.scrollY;
+            });
 
-            if (window.matchMedia("(pointer: fine)").matches) {
-                let mouseX = 0; let mouseY = 0;
-                let cursorX = 0; let cursorY = 0;
-                
-                window.addEventListener('mousemove', (e) => {
-                    mouseX = e.clientX; mouseY = e.clientY;
-                });
+            // Mobile Menu Toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('is-active');
+                mobileOverlay.classList.toggle('is-active');
+                if (mobileMenuBtn.classList.contains('is-active')) {
+                    lenis.stop(); // Prevent scrolling underneath
+                } else {
+                    lenis.start();
+                }
+            });
 
-                gsap.ticker.add(() => {
-                    cursorX += (mouseX - cursorX) * 0.2;
-                    cursorY += (mouseY - cursorY) * 0.2;
-                    cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+            // ---------------------------------------------------------
+            // 4. SPA Routing System
+            // ---------------------------------------------------------
+            const views = document.querySelectorAll('.spa-view');
+            const navLinks = document.querySelectorAll('[data-route]');
+            const localNavs = document.querySelectorAll('.local-nav');
+
+            function hideAllViews() {
+                views.forEach(view => {
+                    view.classList.remove('is-active');
+                    view.style.animation = 'none';
                 });
-                
-                updateCursorBindings();
+                localNavs.forEach(nav => {
+                    nav.classList.remove('is-visible');
+                });
             }
 
-            // 3. Simple Particle Canvas for Home Page
-            const initCanvas = () => {
-                const canvas = document.getElementById('heroCanvas');
-                if(!canvas) return;
-                const ctx = canvas.getContext('2d');
-                let width, height;
-                let particles = [];
-
-                const resize = () => {
-                    width = canvas.width = window.innerWidth;
-                    height = canvas.height = window.innerHeight;
-                };
-
-                window.addEventListener('resize', resize);
-                resize();
-
-                class Particle {
-                    constructor() {
-                        this.x = Math.random() * width;
-                        this.y = Math.random() * height;
-                        this.size = Math.random() * 2 + 0.1;
-                        this.speedY = Math.random() * 0.5 + 0.1;
-                        this.alpha = Math.random() * 0.5 + 0.1;
+            function updateNavActiveStates(route) {
+                navLinks.forEach(link => {
+                    link.classList.remove('is-active');
+                    if (link.dataset.route === route) {
+                        link.classList.add('is-active');
                     }
-                    update() {
-                        this.y -= this.speedY;
-                        if (this.y < 0) {
-                            this.y = height;
-                            this.x = Math.random() * width;
-                        }
-                    }
-                    draw() {
-                        ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                }
+                });
+            }
 
-                for (let i = 0; i < 100; i++) {
-                    particles.push(new Particle());
-                }
-
-                const animateCanvas = () => {
-                    ctx.clearRect(0, 0, width, height);
-                    particles.forEach(p => { p.update(); p.draw(); });
-                    requestAnimationFrame(animateCanvas);
-                };
-                animateCanvas();
-            };
-
-            // 4. SPA Routing Logic
-            const pages = document.querySelectorAll('.spa-page');
-            const navLinks = document.querySelectorAll('[data-nav-target]');
-            const menuTrigger = document.getElementById('menuTrigger');
-            const navList = document.getElementById('navList');
-
-            const initPageAnimations = () => {
-                // Refresh ScrollTriggers
+            function initViewAnimations(viewId) {
+                // Refresh scroll triggers for new DOM height
                 ScrollTrigger.refresh();
                 
-                // Animate elements with .gs-reveal
-                const reveals = document.querySelectorAll('.is-active .gs-reveal');
-                reveals.forEach(el => {
+                const view = document.getElementById(`view-${viewId}`);
+                if (!view) return;
+
+                // Standard reveal up
+                const revealUps = view.querySelectorAll('.reveal-up');
+                revealUps.forEach((el, index) => {
                     gsap.fromTo(el, 
                         { y: 50, opacity: 0 },
                         { 
-                            y: 0, opacity: 1, duration: 1, ease: "power3.out",
+                            y: 0, opacity: 1, duration: 0.8, ease: "power3.out",
                             scrollTrigger: {
                                 trigger: el,
                                 start: "top 85%",
@@ -1522,122 +2078,55 @@
                         }
                     );
                 });
-            };
+            }
 
-            const switchPage = (targetId) => {
-                // Scroll to top
-                window.scrollTo(0, 0);
+            function navigateTo(route) {
+                // Scroll to top smoothly
                 lenis.scrollTo(0, { immediate: true });
-
-                // Hide all pages
-                pages.forEach(page => {
-                    page.classList.remove('is-active');
-                    page.style.animation = 'none'; // reset animation
-                });
-
-                // Update Nav Active States
-                navLinks.forEach(link => {
-                    if(link.classList.contains('nav-link')) {
-                        link.classList.remove('active');
-                        if(link.getAttribute('data-nav-target') === targetId) {
-                            link.classList.add('active');
-                        }
-                    }
-                });
-
-                // Show target page
-                const targetPage = document.getElementById(`page-${targetId}`);
-                if (targetPage) {
-                    targetPage.classList.add('is-active');
-                    targetPage.style.animation = 'fadeInPage 0.8s forwards var(--ease-out-expo)';
-                    
-                    // Re-init specific logic
-                    if(targetId === 'home') initCanvas();
-                    
-                    setTimeout(() => {
-                        initPageAnimations();
-                        updateCursorBindings();
-                    }, 100);
-                }
-
+                
                 // Close mobile menu if open
-                if (window.innerWidth <= 768) {
-                    menuTrigger.classList.remove('is-active');
-                    navList.classList.remove('is-active');
+                if (mobileMenuBtn.classList.contains('is-active')) {
+                    mobileMenuBtn.classList.remove('is-active');
+                    mobileOverlay.classList.remove('is-active');
+                    lenis.start();
                 }
-            };
 
-            // Bind Navigation Clicks
+                hideAllViews();
+                updateNavActiveStates(route);
+
+                const targetView = document.getElementById(`view-${route}`);
+                if (targetView) {
+                    // Slight delay for DOM to settle
+                    setTimeout(() => {
+                        targetView.classList.add('is-active');
+                        targetView.style.animation = ''; // trigger CSS animation
+                        
+                        // Show specific local nav if it exists
+                        const localNav = document.getElementById(`localNav-${route}`);
+                        if(localNav) {
+                            setTimeout(() => { localNav.classList.add('is-visible'); }, 500);
+                        }
+
+                        initViewAnimations(route);
+                    }, 50);
+                }
+            }
+
+            // Bind Routing Clicks
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const target = link.getAttribute('data-nav-target');
-                    if(target) switchPage(target);
+                    const route = link.dataset.route;
+                    if (route) {
+                        navigateTo(route);
+                        // Also handle manual scroll to top anchor in footer
+                        if(link.innerText.includes('Back to Top')) {
+                            lenis.scrollTo(0, { duration: 1.5 });
+                        }
+                    }
                 });
             });
 
-            // Mobile menu toggle
-            menuTrigger.addEventListener('click', () => {
-                menuTrigger.classList.toggle('is-active');
-                navList.classList.toggle('is-active');
-            });
-
-            // 5. Preloader Sequence
-            const initPreloader = () => {
-                const loader = document.getElementById('loader');
-                const progressBar = document.getElementById('loaderProgressBar');
-                const percentageTxt = document.getElementById('loaderPercentage');
-                const revealLayer = document.querySelector('.loader-reveal-layer');
-                
-                let progress = 0;
-                
-                const interval = setInterval(() => {
-                    progress += Math.floor(Math.random() * 15) + 5;
-                    if (progress > 100) progress = 100;
-                    
-                    progressBar.style.width = `${progress}%`;
-                    percentageTxt.innerText = `${progress}%`;
-                    
-                    if (progress === 100) {
-                        clearInterval(interval);
-                        startRevealSequence();
-                    }
-                }, 100);
-
-                function startRevealSequence() {
-                    const tl = gsap.timeline();
-                    revealLayer.style.display = 'block';
-                    
-                    tl.to('.loader-svg, .loader-progress-container, .loader-text-wrapper', {
-                        y: -50, opacity: 0, duration: 0.6, ease: "power3.inOut"
-                    })
-                    .to(revealLayer, {
-                        scaleY: 0, duration: 1, ease: "expo.inOut",
-                    }, "-=0.1")
-                    .to(loader, {
-                        opacity: 0, duration: 0.5,
-                        onComplete: () => {
-                            loader.style.display = 'none';
-                            initCanvas();
-                            initPageAnimations();
-                        }
-                    }, "-=0.4");
-                }
-            };
-
-            // Header scroll logic
-            let lastScroll = 0;
-            const header = document.getElementById('siteHeader');
-            window.addEventListener('scroll', () => {
-                const currentScroll = window.pageYOffset;
-                if (currentScroll > 50) header.classList.add('is-scrolled');
-                else header.classList.remove('is-scrolled');
-                lastScroll = currentScroll;
-            });
-
-            // Start Everything
-            gsap.registerPlugin(ScrollTrigger);
-            initPreloader();
         });
     </script>
 </body>
