@@ -27,8 +27,7 @@
             --color-surface: rgba(255, 255, 255, 0.05);
             --color-surface-hover: rgba(255, 255, 255, 0.08);
             --color-surface-active: rgba(255, 255, 255, 0.12);
-            --color-surface-border: lch(50 20 var(--hue, 0) / 0.2); animation: hue 10s linear infinite; } @keyframes hue { from { --hue: 0; } to { --hue: 360; }
-            
+            --color-surface-border: rgba(255, 255, 255, 0.1);            
             
             /* Typography Colors */
             --color-text-primary: #f5f5f7;
@@ -367,7 +366,7 @@
         /* ==========================================================================
            5. NAVIGATION (FROSTED GLASS MEGA MENU)
            ========================================================================== */
-        .site-header {
+                .site-header {
             position: fixed;
             top: 0;
             left: 0;
@@ -375,6 +374,32 @@
             z-index: var(--z-header);
             transition: transform 0.4s var(--ease-out-expo), background-color 0.4s;
             padding: var(--space-4) 0;
+            /* This creates the subtle shifting background and border */
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid white;
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            animation: taskbarRainbow 10s linear infinite;
+        }
+        
+                @keyframes taskbarRainbow {
+            /* 0.1 opacity keeps it very subtle and "glass-like" */
+            0%   { 
+                border-color: hsla(0, 30%, 60%, 0.5); 
+                background-color: hsla(0, 30%, 10%, 0.7);
+            }
+            33%  { 
+                border-color: hsla(120, 30%, 60%, 0.5); 
+                background-color: hsla(120, 30%, 10%, 0.7);
+            }
+            66%  { 
+                border-color: hsla(240, 30%, 60%, 0.5); 
+                background-color: hsla(240, 30%, 10%, 0.7);
+            }
+            100% { 
+                border-color: hsla(360, 30%, 60%, 0.5); 
+                background-color: hsla(360, 30%, 10%, 0.7);
+            }
         }
 
         .site-header.is-scrolled {
