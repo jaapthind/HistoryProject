@@ -278,17 +278,41 @@
         }
 
         /* Massive Information Cards */
-        .massive-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-medium);
-            border-radius: var(--radius-2xl);
-            padding: var(--space-12);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(20px);
-            transition: border-color 0.4s ease;
-        }
-        .massive-card:hover { border-color: var(--border-strong); }
+        /* Massive Information Cards - FULL LIQUID GLASS VERSION */
+            .massive-card {
+                /* 1. The Surface: Very transparent white for a clean pane look */
+                background: rgba(255, 255, 255, 0.03); 
+                
+                /* 2. The Glossy Edge: A bright, thin rim to catch the light */
+                border: 1px solid rgba(255, 255, 255, 0.2); 
+                
+                /* 3. The Depth: Inset glow for thickness + heavy shadow to float the card */
+                box-shadow: 
+                    inset 0 0 20px rgba(255, 255, 255, 0.05), 
+                    0 20px 40px rgba(0, 0, 0, 0.4);
+                
+                /* 4. The Liquid Effect: Strong blur and high saturation */
+                backdrop-filter: blur(25px) saturate(500%);
+                -webkit-backdrop-filter: blur(25px) saturate(500%);
+    
+                /* 5. Structural Layout */
+                border-radius: var(--radius-2xl);
+                padding: var(--space-12);
+                position: relative;
+                overflow: hidden;
+                
+                /* 6. Interaction: Smooth transition for hover effects */
+                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+    
+            /* 7. Hover State: Makes the glass "pop" and the edge light up */
+            .massive-card:hover { 
+                border-color: rgba(255, 255, 255, 0.5); 
+                transform: translateY(-8px) scale(1.01);
+                box-shadow: 
+                    inset 0 0 20px rgba(255, 255, 255, 0.1), 
+                    0 30px 60px rgba(0, 0, 0, 0.6);
+            }
         
         .card-header {
             display: flex;
