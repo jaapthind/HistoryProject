@@ -930,7 +930,7 @@
                 
                 const view = document.getElementById(`view-${viewId}`);
                 if(!view) return;
-                gsap.utils.toArray(`${view.id === 'view-home' ? '.text-lead' : '.placeholder-text-area'}`).forEach(el => { const t = el.innerText; el.innerText = ''; gsap.to(el, { text: t, duration: 2, ease: "none", scrollTrigger: { trigger: el, start: "top 90%" } }); });
+                view.querySelectorAll('h1, h2').forEach(el => { const t = el.innerText; el.innerText = ''; gsap.to(el, { duration: t.length * 0.08, text: { value: t, delimiter: "", padSpace: true, newClass: "mono", cursor: "|" }, ease: "none", scrollTrigger: { trigger: el, start: "top 95%" } }); });
 
                 // Animate elements fading up
                 const fadeUps = view.querySelectorAll('.gs-fade-up');
