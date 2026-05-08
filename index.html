@@ -259,6 +259,7 @@
         }
         .btn:hover { color: var(--bg-base); border-color: var(--text-primary); }
         .btn:hover::before { transform: translateY(0); }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         /* Liquid Glass Rainbow Border (Taskbar & Cards) */
         @keyframes vibrantRainbowLiquid {
@@ -930,7 +931,7 @@
                 
                 const view = document.getElementById(`view-${viewId}`);
                 if(!view) return;
-                view.querySelectorAll('h1, h2').forEach(el => { const t = el.innerText; el.innerText = ''; gsap.to(el, { duration: t.length * 0.08, text: { value: t, delimiter: "", padSpace: true, newClass: "mono", cursor: "|" }, ease: "none", scrollTrigger: { trigger: el, start: "top 95%" } }); });
+                view.querySelectorAll('h1, h2').forEach(el => { const text = el.getAttribute('data-text') || el.innerText; el.setAttribute('data-text', text); el.innerText = ''; let i = 0; const speed = 120; const cursor = document.createElement('span'); cursor.className = 'mono'; cursor.style.color = 'var(--accent-main)'; cursor.innerText = '|'; el.appendChild(cursor); const type = () => { if (i <= text.length) { el.innerHTML = text.substring(0, i) + `<span class="mono" style="color:var(--accent-main); margin-left:2px; animation: blink 1s infinite">${i < text.length ? '|' : ''}</span>`; i++; setTimeout(type, speed); } }; const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { type(); observer.unobserve(el); } }, { threshold: 0.5 }); observer.observe(el); });
 
                 // Animate elements fading up
                 const fadeUps = view.querySelectorAll('.gs-fade-up');
