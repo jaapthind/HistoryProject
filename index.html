@@ -158,23 +158,23 @@
         }
 
         /* The Light Rainbow Effect */
-        .bg-rainbow-aurora {
+                .bg-rainbow-aurora {
             position: absolute;
             inset: -50%;
             background: conic-gradient(
                 from 0deg at 50% 50%,
-                rgba(255, 0, 0, 0.03),
-                rgba(255, 165, 0, 0.03),
-                rgba(255, 255, 0, 0.03),
-                rgba(0, 128, 0, 0.03),
-                rgba(0, 0, 255, 0.03),
-                rgba(75, 0, 130, 0.03),
-                rgba(238, 130, 238, 0.03),
-                rgba(255, 0, 0, 0.03)
+                rgba(255, 0, 0, 0.3),    /* Changed 0.03 to 0.3 */
+                rgba(255, 165, 0, 0.3),
+                rgba(255, 255, 0, 0.3),
+                rgba(0, 128, 0, 0.3),
+                rgba(0, 0, 255, 0.3),
+                rgba(75, 0, 130, 0.3),
+                rgba(238, 130, 238, 0.3),
+                rgba(255, 0, 0, 0.3)
             );
             filter: blur(120px);
             animation: rotateAurora 20s linear infinite;
-            opacity: 1;
+            opacity: 1; 
         }
 
         /* Subtle floating orbs for depth */
