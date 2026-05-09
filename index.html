@@ -119,6 +119,7 @@
         a { color: inherit; text-decoration: none; }
         ul { list-style: none; }
         img, svg { max-width: 100%; height: auto; display: block; }
+        img { max-height: 60vh !important; width: auto !important; object-fit: contain !important; margin-left: auto; margin-right: auto; }
 
         /* Typography */
         h1, h2, h3, h4 { font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: var(--space-4); }
@@ -306,6 +307,7 @@
                 /* 6. Interaction: Smooth transition for hover effects */
                 transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             }
+        .massive-card { width: clamp(320px, 95vw, var(--container-lg)); padding: clamp(1.5rem, 5vw, var(--space-12)) !important; margin-left: auto; margin-right: auto; }
     
             /* 7. Hover State: Makes the glass "pop" and the edge light up */
             .massive-card:hover { 
@@ -886,6 +888,7 @@
                 }
                 lastScroll = currentScroll;
             });
+            const btt = Object.assign(document.body.appendChild(document.createElement('button')), { innerHTML: '↑', className: 'mono btn', style: 'position:fixed; bottom:20px; right:20px; z-index:1000; padding:1rem; width:50px; height:50px; border-radius:50%; opacity:0; visibility:hidden; transition:0.3s' }); btt.onclick = () => lenis.scrollTo(0); window.addEventListener('scroll', () => gsap.to(btt, { opacity: window.scrollY > 500 ? 1 : 0, visibility: window.scrollY > 500 ? 'visible' : 'hidden', duration: 0.4 }));
 
             /* --- 4. Single Page Application (SPA) Router --- */
             const views = document.querySelectorAll('.spa-view');
