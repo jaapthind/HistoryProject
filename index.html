@@ -121,7 +121,15 @@
         img, svg { max-width: 100%; height: auto; display: block; }
         img { max-height: 60vh !important; width: auto !important; object-fit: contain !important; margin-left: auto; margin-right: auto; }
         .img-container .mono { position: relative; width: fit-content; max-width: 90%; margin: -25px auto 0; padding: 8px 20px; background: rgba(10, 10, 12, 0.8); backdrop-filter: blur(12px); border: 1px solid var(--border-medium); border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 10; text-align: center; display: block; }
-        .img-container img, .placeholder-image-area img { border-radius: var(--radius-xl); border: 1px solid var(--border-subtle); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s; cursor: zoom-in; }
+            .img-container img, .placeholder-image-area img { 
+        border-radius: var(--radius-xl); 
+        border: 1px solid var(--border-subtle); 
+        transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s; 
+        cursor: zoom-in; 
+        pointer-events: auto !important; 
+        position: relative; 
+        z-index: 5; 
+    }
 
         /* Typography */
         h1, h2, h3, h4 { font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: var(--space-4); }
