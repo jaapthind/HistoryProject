@@ -2,7 +2,6 @@
 > **BY JAAP THIND**
 
 ### ⚡ SYSTEM STATUS: ACTIVE
-🔴🟠🟡🟢🔵🟣
 
 ```bash
 [SECTOR 01: OVERT]   -------------------- [100%]
