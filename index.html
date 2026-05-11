@@ -399,7 +399,30 @@
             transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
-        .preloader.hide { transform: translateY(-100%); }
+        /* Mechanical Vault Shutter Reveal */
+        .preloader.hide {
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .preloader.hide .loader-content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .preloader::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: var(--bg-base);
+            z-index: -1;
+            transition: clip-path 1.2s cubic-bezier(0.87, 0, 0.13, 1);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .preloader.hide::after {
+            clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+        }
 
         .loader-content { text-align: center; }
         
@@ -943,7 +966,7 @@
                         initGSAPForView('home');
                     }, 800);
                 }
-            }, 150);
+            }, 90);
 
             /* --- 2. Lenis Smooth Scrolling --- */
             const lenis = new Lenis({
